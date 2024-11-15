@@ -5,10 +5,11 @@ const router = express.Router();
 // rotas para cada controle
 router.get('/', (req, res) => {
     try{
-        res.render("Home/home.html")
-      }
-      catch(e){
-        console.log(`Error during fetching operation: ${e}\n`)
+      res.render('pages/home', {
+        title: 'Home',
+        style: 'home.css' 
+      })} catch(e){
+        console.log(`Erro ao renderizar para a página Home: ${e}\n`)
       }
 });
 
