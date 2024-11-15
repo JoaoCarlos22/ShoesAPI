@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     try{
       res.render('pages/home', {
         title: 'Home',
-        style: 'home.css' 
+        style: 'home.css', 
       })} catch(e){
         console.log(`Erro ao renderizar para a página Home: ${e}\n`)
       }

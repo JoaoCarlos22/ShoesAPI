@@ -10,9 +10,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Rotas
+app.use(calçadosRoutes)
+
 // Configurações de arquivos estáticos (CSS, JS, imagens)
 app.use(express.static(path.join(__dirname, 'src/styles')));
-app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
+//app.use('/assets', express.static(path.join(__dirname, 'src/assets')));
 
 // Configurações do Express Handlebars (template engine)
 app.set('views', path.join(__dirname, 'src/views'))
@@ -27,8 +30,7 @@ app.engine('.hbs', engine({
 }))
 app.set('view engine', '.hbs')
 
-// Rotas
-app.use('/', calçadosRoutes)
+
 
 // Conecta ao banco de dados MongoDB e inicia o servidor web
 connectDB()
