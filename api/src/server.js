@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-var expbs = require('express-handlebars');
 const {engine} = require('express-handlebars');
 const connectDB = require('./db');
 const calçadosRoutes = require('./routes/calcadosRoutes')
@@ -8,33 +7,18 @@ const calçadosRoutes = require('./routes/calcadosRoutes')
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-/*
-app.use(express.static('public'))
-*/
-
-//const hbs = expbs.create()
 
 app.use('/', calçadosRoutes)
-
-app.engine(
-    ".html",
-    engine({
-        //defaultLayout: 'mainLayout.hbs',
-        //layoutsDir: '/layouts'
-    })
-);
-app.set('view engine', 'html');
-app.set('view engine', path.join(__dirname, 'views'))
-/*
-app.set('view engine', 'hbs');
+app.use('styles/', express.static(path.join(__dirname, 'styles')));
+app.use('assets/', express.static(path.join(__dirname, 'assets')));
 app.set('views', path.join(__dirname, 'views'))
 app.engine('.hbs', engine({
-    defaultLayout: 'mainLayout.hbs', // Layout padrão (se estiver usando)
-    layoutsDir: path.join(__dirname, 'views/layouts')
-}));
-*/
+    extname: "hbs",
+    layoutDir: path.join(__dirname, 'views/layouts'),
+    defaultLayout: 'mainLayout.hbs'
+}))
+app.set('view engine', '.hbs')
+
 connectDB()
 .then(data => {
     console.log(' >> banco de dados conectado com sucesso:\n')
