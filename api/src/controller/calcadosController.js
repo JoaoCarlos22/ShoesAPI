@@ -53,7 +53,7 @@ const createCalçado = async (req, res) => {
         const newCalçado = new Calçado(req.body);
         
         // verifica se o id da categoria existe
-        const categoryExiste = await Categoria.findById(newCalçado.idCategory);
+        const categoryExiste = await Categoria.findById(req.body.idCategory);
         if (!categoryExiste) {
             return res.status(404).send('Categoria não encontrada!');
         }    
@@ -62,11 +62,6 @@ const createCalçado = async (req, res) => {
         const calçadoExiste = await Calçado.findOne({ name: newCalçado.name });
         if (calçadoExiste) {
             return res.status(409).send('Calçado já existe!');
-        }
-
-        // verifica se os dados são válidos
-        if (!newCalçado.isValid()) {
-            return res.status(400).send('Por favor, preencha todos os campos corretamente!');
         }
         
         // cadastra o calçado e volta para a Home
@@ -117,11 +112,6 @@ const updateCalçado = async (req, res) => {
         // atualiza os dados do calçado (quantidade e/ou preço)
         calçado.quantity = req.body.quantity;
         calçado.price = req.body.price;
-
-        // verifica se os dados são válidos
-        if (!calçado.isValid()) {
-            return res.status(400).send('Por favor, preencha todos os campos corretamente!');
-        }
         
         // salva os dados do calçado e volta para a Home
         await calçado.save();
