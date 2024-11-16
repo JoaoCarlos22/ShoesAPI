@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
         console.log(`Erro ao renderizar para a página Home: ${e}\n`)
       }
 });
+router.get('/home', getCalcados);
 
 /*
-router.get('/calcados', getCalcados);
 router.get("/calcado/:id", getCalcado);
 router.post("/cadastrarCalcado", cadastrarCalcado);
 router.put("/updateCalcado/:id", updateCalcado);
