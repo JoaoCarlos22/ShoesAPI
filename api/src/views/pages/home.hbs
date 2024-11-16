@@ -1,3 +1,12 @@
-<div class="container">
-    <p>Ola server</p>
-</div>
+<tbody>
+    {{#each shoes}}
+    <tr>
+      <td>{{this.name}}</td>
+      <td>{{this.size}}</td>
+      <td>{{this.color}}</td>
+      <td>{{this.brand}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.idCategory}}</td>
+    </tr>
+    {{/each}}
+</tbody>
