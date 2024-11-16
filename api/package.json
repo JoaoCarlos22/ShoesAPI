@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "ShoesAPI",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -9,12 +9,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Trabalho prático de Bancxo de Dados 2.",
   "dependencies": {
     "express": "^4.21.1",
     "express-handlebars": "^8.0.1",
     "mongoose": "^8.8.1",
-    "nodemon": "^3.1.7",
-    "path": "^0.12.7"
+    "nodemon": "^3.1.7"
   }
 }
