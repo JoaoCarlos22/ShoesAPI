@@ -2,12 +2,22 @@ const Calçado = require("../models/calcadoModel.js");
 
 // Lista todos os calçados existentes no banco
 const getCalçados = async (req, res) => {
-    Calçado.find().lean()
-    .then(data => {
-      res.render("pages/home", { shoes: data })
-    })
-    .catch(err =>
-      console.log('Erro ao buscar os calçados existentes:', err))
+    try{
+        const calçados = await Calçado.find({});
+        
+        if (calçados.length > 0) {
+            res.render('pages/home', {
+              title: 'Home',
+              style: 'home.css',
+              shoes: calçados
+            });
+          } else {
+            res.status(404).send('Calçados não encontrados!');
+          }
+    }catch(error){
+        console.error('Erro ao buscar os calçados existentes:', error);
+        res.status(500)
+    }
 }
     /*
     try{
