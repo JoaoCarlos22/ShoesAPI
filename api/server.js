@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rotas
-app.use('/',calçadosRoutes)
+app.use('/ShoesSystem',calçadosRoutes)
 
 // Configurações de arquivos estáticos (CSS, JS, imagens)
 app.use(express.static(path.join(__dirname, 'src/styles')));

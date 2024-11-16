@@ -1,4 +1,5 @@
 const Calçado = require("../models/calcadoModel.js");
+const Categoria = require("../models/categoriaModel.js");
 
 // Lista todos os calçados existentes no banco
 const getCalçados = async (req, res) => {
@@ -14,11 +15,11 @@ const getCalçados = async (req, res) => {
               shoes: calçados
             });
           } else {
-            res.status(404).send('Calçados não encontrados!');
+            res.status(404).send('Banco de dados vazio!');
           }
     }catch(error){
         console.error('Erro ao buscar os calçados existentes:', error);
-        res.status(500)
+        res.status(500).send(error.message)
     }
 }
 
@@ -41,7 +42,7 @@ const getCalçado = async (req, res) => {
         });
     } catch (error) {
         console.error('Erro ao buscar o calçado:', error);
-        res.status(500)
+        res.status(500).send(error.message);
     }
 } 
 
@@ -73,10 +74,35 @@ const createCalçado = async (req, res) => {
         res.redirect('/home');
     }catch(error){
         console.error('Erro ao registrar calçado:', error);
-        res.status(500)
+        res.status(500).send(error.message);
     }
 }
 
+// Registra uma categoria
+ const createCategory = async (req, res) => {
+    try{
+        // captura os dados do req.body
+        const newCategory = new Categoria(req.body);
+        
+        // verifica se há alguma duplicata pelo nome
+        const categoryExiste = await Categoria.findOne({ name: newCategory.name });
+        if (categoryExiste) {
+            return res.status(409).send('Categoria já existe!');
+        }
+        
+        // verifica se os dados são válidos
+        if (newCategory.name === " ") {
+            return res.status(400).send('Por favor, preencha o nome da categoria!');
+        }
+        
+        // cadastra a categoria e volta para a Home
+        await newCategory.save();
+        res.redirect('/home');
+    } catch (error) {
+        console.error('Erro ao registrar a categoria:', error);
+        res.status(500).send(error.message);
+    }
+ }
 // Atualiza um calçado
 const updateCalçado = async (req, res) => {
     try{
@@ -102,26 +128,26 @@ const updateCalçado = async (req, res) => {
         res.redirect('/home');
     } catch (error) {
         console.error('Erro ao atualizar o calçado:', error);
-        res.status(500)
+        res.status(500).send(error.message);
     }
 }
 
 // Deleta um calçado
 const deleteCalçado = async (req, res) => {
     try{
-        // busca o calçado pelo id no banco de dados com findByIdAndDelete()
-        const calçado = await Calçado.findByIdAndDelete(req.params.id)
-        
-        // verifica se o calçado existe
-        if (!calçado) {
+        // verifica se o id existe
+        if (!req.params.id) {
             return res.status(404).send('Calçado não encontrado!');
         }
+
+        // busca o calçado pelo id no banco de dados com findByIdAndDelete()
+        await Calçado.findByIdAndDelete(req.params.id)
         
         // volta para a Home
         res.redirect('/home');
     } catch (error) {
         console.error('Erro ao deletar o calçado:', error);
-        res.status(500)
+        res.status(500).send(error.message);
     }
 }
 
@@ -129,6 +155,7 @@ module.exports = {
     getCalçados,
     getCalçado,
     createCalçado,
+    createCategory,
     updateCalçado,
     deleteCalçado
 }
