@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-//const {getEmpresa, getEmpresas, createEmpresa, updateEmpresa, deleteEmpresa} = require("../contrroller/empresaController");
+const { getCalçados, createCalçado} = require("../controller/calcadosController.js");
 
 // rotas para cada controle
 router.get('/home', (req, res) => {
@@ -13,7 +13,8 @@ router.get('/home', (req, res) => {
       }
 });
 
-router.get('/home', getCalcados);
+router.get('/home', getCalçados);
+router.post('/addCalcado', createCalçado);
 
 /*
 router.get("/calcado/:id", getCalcado);
