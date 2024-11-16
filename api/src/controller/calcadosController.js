@@ -22,7 +22,30 @@ const getCalçados = async (req, res) => {
     }
 }
 
- // Registra um novo calçado
+// Busca apenas um calçado
+const getCalçado = async (req, res) => {
+    try{
+        // busca o calçado pelo id no banco de dados com findById()
+        const calçado = await Calçado.findById(req.params.id)
+        
+        // verifica se o calçado existe
+        if (!calçado) {
+            return res.status(404).send('Calçado não encontrado!');
+        }
+
+        // renderiza para rota /calcado:id
+        res.render('pages/calcado', {
+            title: 'Calçado',
+            style: 'calcado.css',
+            shoe: calçado
+        });
+    } catch (error) {
+        console.error('Erro ao buscar o calçado:', error);
+        res.status(500)
+    }
+} 
+
+// Registra um novo calçado
 const createCalçado = async (req, res) => {
     try{
         // captura os dados do req.body
@@ -54,7 +77,58 @@ const createCalçado = async (req, res) => {
     }
 }
 
+// Atualiza um calçado
+const updateCalçado = async (req, res) => {
+    try{
+        // busca o calçado pelo id no banco de dados com findById()
+        const calçado = await Calçado.findById(req.params.id)
+        
+        // verifica se o calçado existe
+        if (!calçado) {
+            return res.status(404).send('Calçado não encontrado!');
+        }  
+        
+        // atualiza os dados do calçado (quantidade e/ou preço)
+        calçado.quantity = req.body.quantity;
+        calçado.price = req.body.price;
+
+        // verifica se os dados são válidos
+        if (!calçado.isValid()) {
+            return res.status(400).send('Por favor, preencha todos os campos corretamente!');
+        }
+        
+        // salva os dados do calçado e volta para a Home
+        await calçado.save();
+        res.redirect('/home');
+    } catch (error) {
+        console.error('Erro ao atualizar o calçado:', error);
+        res.status(500)
+    }
+}
+
+// Deleta um calçado
+const deleteCalçado = async (req, res) => {
+    try{
+        // busca o calçado pelo id no banco de dados com findByIdAndDelete()
+        const calçado = await Calçado.findByIdAndDelete(req.params.id)
+        
+        // verifica se o calçado existe
+        if (!calçado) {
+            return res.status(404).send('Calçado não encontrado!');
+        }
+        
+        // volta para a Home
+        res.redirect('/home');
+    } catch (error) {
+        console.error('Erro ao deletar o calçado:', error);
+        res.status(500)
+    }
+}
+
 module.exports = {
     getCalçados,
-    createCalçado
+    getCalçado,
+    createCalçado,
+    updateCalçado,
+    deleteCalçado
 }

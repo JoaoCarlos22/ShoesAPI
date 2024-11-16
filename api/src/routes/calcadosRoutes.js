@@ -1,15 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { getCalçados, createCalçado} = require("../controller/calcadosController.js");
+const { getCalçados, getCalçado, createCalçado, updateCalçado, deleteCalçado} = require("../controller/calcadosController.js");
 
 // rotas para cada controle
 router.get('/home', getCalçados);
+router.get('/calcado/:id', getCalçado);
 router.post('/addCalcado', createCalçado);
+router.put('/updCalcado/:id', updateCalçado);
+router.delete('/delCalcado/:id', deleteCalçado);
 
-/*
-router.get("/calcado/:id", getCalcado);
-router.post("/cadastrarCalcado", cadastrarCalcado);
-router.put("/updateCalcado/:id", updateCalcado);
-router.delete("/deleteCalcado/:id", deleteCalcado);
-*/
 module.exports = router;
