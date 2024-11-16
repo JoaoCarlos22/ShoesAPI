@@ -1,6 +1,11 @@
-.container {
-    background-color: rgb(13, 241, 24);
+table {
+    background-color: #ccc;
 }
-p {
-    color: rgb(0, 0, 0);
+
+thead {
+    background-color: sandybrown
+}
+
+tbody {
+    background-color: rgb(105, 219, 105);
 }
