@@ -5,7 +5,7 @@ const {engine} = require('express-handlebars');
 const connectDB = require('./db');
 const calçadosRoutes = require('./src/routes/calcadosRoutes')
 
-// Configurações do Express 1.0.0
+// Configurações do Express
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,8 +29,6 @@ app.engine('.hbs', engine({
     }
 }))
 app.set('view engine', '.hbs')
-
-
 
 // Conecta ao banco de dados MongoDB e inicia o servidor web
 connectDB()
