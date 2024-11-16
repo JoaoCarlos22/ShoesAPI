@@ -3,7 +3,7 @@ const router = express.Router();
 //const {getEmpresa, getEmpresas, createEmpresa, updateEmpresa, deleteEmpresa} = require("../contrroller/empresaController");
 
 // rotas para cada controle
-router.get('/', (req, res) => {
+router.get('/home', (req, res) => {
     try{
       res.render('pages/home', {
         title: 'Home',
@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
         console.log(`Erro ao renderizar para a página Home: ${e}\n`)
       }
 });
+
 router.get('/home', getCalcados);
 
 /*
