@@ -6,7 +6,9 @@ const getCalçados = async (req, res) => {
     try{
         // busca todos os calçados no banco de dados com find() e retorna um array de calçados e exibe o nome da categoria inves do id
         const calçados = await Calçado.find({})
-       //.populate('category')   
+        .populate('category', 'name'); 
+
+        console.log(calçados)
         
         // verifica se há algum calçado
         if (calçados.length > 0) {
@@ -54,7 +56,7 @@ const createCalçado = async (req, res) => {
         const newCalçado = new Calçado(req.body);
         
         // verifica se o id da categoria existe
-        const categoryExiste = await Categoria.findById(req.body.idCategory);
+        const categoryExiste = await Categoria.findById(req.body.category);
         if (!categoryExiste) {
             return res.status(404).send('Categoria não encontrada!');
         }    
