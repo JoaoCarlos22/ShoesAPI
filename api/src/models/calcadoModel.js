@@ -62,7 +62,7 @@ const calçadoSchema = mongoose.Schema({
             message: 'Quantidade inválida! A quantidade deve ser um número positivo.'
         }
     },
-    idCategory: {
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categoria',
         required: true,

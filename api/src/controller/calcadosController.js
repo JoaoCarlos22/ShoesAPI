@@ -4,8 +4,9 @@ const Categoria = require("../models/categoriaModel.js");
 // Lista todos os calçados existentes no banco
 const getCalçados = async (req, res) => {
     try{
-        // busca todos os calçados no banco de dados com find() e retorna um array de calçados
+        // busca todos os calçados no banco de dados com find() e retorna um array de calçados e exibe o nome da categoria inves do id
         const calçados = await Calçado.find({})
+       //.populate('category')   
         
         // verifica se há algum calçado
         if (calçados.length > 0) {
