@@ -1,5 +1,6 @@
 const Calçado = require("../models/calcadoModel.js");
 const Categoria = require("../models/categoriaModel.js");
+const ObjectId = require('mongoose').Types.ObjectId;
 
 // Lista todos os calçados existentes no banco
 const getCalçados = async (req, res) => {
@@ -62,7 +63,16 @@ const getCadastroCalçado = async (req, res) => {
 const createCalçado = async (req, res) => {
     try{
         // captura os dados do req.body
-        const newCalçado = new Calçado(req.body);
+        const newCalçado = new Calçado({
+            name: req.body.name,
+            gender: req.body.gender,
+            brand: req.body.brand,
+            size: req.body.size,
+            color: req.body.color,
+            price: req.body.price,
+            category: req.body.category,  // id da categoria
+            quantity: req.body.quantity
+        });
         
         // verifica se o id da categoria existe
         const categoryExiste = await Categoria.findById(req.body.category);

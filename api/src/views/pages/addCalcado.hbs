@@ -20,89 +20,98 @@
                 Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
             </section>
 
-            <section>
-                <h2>Nome:</h2>
-                <form>
-                    <input type="text" id="nome" name="nome" placeholder="Digite o nome do calçado" required value="{{shoe.name}}">
-                </form>
-            </section>
+            <form action="/ShoesSystem/addCalcado" method="post">
+                <section>
+                    <h2>Nome:</h2>
+                        <input type="text" id="name" name="name" placeholder="Digite o nome do calçado" required>
+                    
+                </section>
+                
 
-            <section>
-                <h2>Gênero:</h2>
-                <form>
-                    <select name="genero" id="genero">
-                        <option value="{{shoe.gender}}">Feminino</option>
-                        <option value="{{shoe.gender}}">Masculino</option>
-                    </select>
-                </form>
-            </section>
+                <section>
+                    <h2>Gênero:</h2>
+                    
+                        <select name="gender" id="gender">
+                            <option value="Feminino">Feminino</option>
+                            <option value="Masculino">Masculino</option>
+                        </select>
+                    
+                </section>
+                
 
-            <section>
-                <h2>Categoria:</h2>
-                <form>
-                    <select name="categoria" id="categoria">
-                        <option value="">Selecione uma categoria</option>
-                        {{#each categories}}
-                            <option value="{{this._id}}">{{this.name}}</option>
-                        {{/each}}
-                    </select>
-                </form>
-            </section>
+                <section>
+                    <h2>Categoria:</h2>
+                    
+                        <select name="category" id="category">
+                            <option value="">Selecione uma categoria</option>
+                            {{#each categories}}
+                                <option value="{{this._id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                </section>
+                
 
-            <section>
-                <h2>Marca:</h2>
-                <form>
-                    <select name="marca" id="marca">
-                        <option value="sapatinhodeluxo">Sapatinho de Luxo</option>
-                        <option value="vizzano">Vizzano</option>
-                        <option value="olympikus">Olympikus</option>
-                        <option value="kenner">Kenner</option>
-                    </select>
-                </form>
-            </section>
+                <section>
+                    <h2>Marca:</h2>
+                    
+                        <select name="brand" id="brand">
+                            <option value="sapatinhodeluxo">Sapatinho de Luxo</option>
+                            <option value="vizzano">Vizzano</option>
+                            <option value="olympikus">Olympikus</option>
+                            <option value="kenner">Kenner</option>
+                        </select>
+                    
+                </section>
 
-            <section>
-                <h2>Cor:</h2>
-                <form>
-                    <input type="text" id="cor" name="cor" placeholder="Digite a cor do calçado" required value="{{shoe.color}}">
-                </form>
-            </section>
+                <section>
+                    <h2>Cor:</h2>
+                    
+                        <input type="text" id="color" name="color" placeholder="Digite a cor do calçado" required>
+                    
+                </section>
 
-            <section>
-                <h2>Tamanho:</h2>
-                <form>
-                    <input type="text" id="tamanho" name="tamanho" placeholder="Digite o tamanho do calçado" required value="{{shoe.size}}">
-                </form>
-            </section>
+                <section>
+                    <h2>Tamanho:</h2>
+                    
+                        <input type="text" id="size" name="size" placeholder="Digite o tamanho do calçado" required>
+                    
+                </section>
 
-            <section>
-                <h2>Preço:</h2>
-                <form>
-                    <input type="text" id="preco" name="preco" placeholder="Digite o preço" required value="{{shoe.price}}">
-                </form>
-            </section>
+                <section>
+                    <h2>Preço:</h2>
+                    
+                        <input type="text" id="price" name="price" placeholder="Digite o preço" required>
+                    
+                </section>
 
-            <section>
-                <h2>Quantidade:</h2>
-                <form>
-                    <input type="number" id="quantidade" name="quantidade" placeholder="Digite a quantidade" required value="{{shoe.quantity}}">
-                </form>
-            </section>
+                <section>
+                    <h2>Quantidade:</h2>
+                    
+                        <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required>
+                    
+                </section>
 
-            <section>
-                <h2>Quantidade em estoque:</h2>
-                <form>
-                    <input type="number" id="quantidadeEstoque" name="quantidadeEstoque"  readonly>
-                </form>
-            </section>
+                <section>
+                    <h2>Quantidade em estoque:</h2>
+                    
+                        <input type="number" id="quantidadeEstoque" name="quantidadeEstoque"  readonly>
+                    
+                </section>
 
-            <section>
-                <h2>Remover do estoque:</h2>
-                <form>
-                    <input type="number" id="remover" name="remover" placeholder="Quantidade a remover...">
-                    <button type="submit">Remover</button>
-                </form>
-            </section>
+                <section>
+                    <h2>Remover do estoque:</h2>
+                    
+                        <input type="number" id="remover" name="remover" placeholder="Quantidade a remover...">
+                        <button type="submit">Remover</button>
+                    
+                </section>
+
+                <section>
+                    <button type="submit">
+                        Adicionar
+                    </button>
+                </section>
+            </form>  
         </main>
 
         <footer>
