@@ -88,7 +88,7 @@ const createCalçado = async (req, res) => {
         
         // cadastra o calçado e volta para a Home
         await newCalçado.save();
-        res.redirect('/home');
+        res.redirect('/ShoesSystem/home');
     }catch(error){
         console.error('Erro ao registrar calçado:', error);
         res.status(500).send(error.message);
@@ -114,7 +114,7 @@ const createCalçado = async (req, res) => {
         
         // cadastra a categoria e volta para a Home
         await newCategory.save();
-        res.redirect('/home');
+        res.redirect('/ShoesSystem/home');
     } catch (error) {
         console.error('Erro ao registrar a categoria:', error);
         res.status(500).send(error.message);
@@ -137,7 +137,7 @@ const updateCalçado = async (req, res) => {
         
         // salva os dados do calçado e volta para a Home
         await calçado.save();
-        res.redirect('/home');
+        res.redirect('/ShoesSystem/home');
     } catch (error) {
         console.error('Erro ao atualizar o calçado:', error);
         res.status(500).send(error.message);
@@ -156,7 +156,7 @@ const deleteCalçado = async (req, res) => {
         await Calçado.findByIdAndDelete(req.params.id)
         
         // volta para a Home
-        res.redirect('/home');
+        res.redirect('/ShoesSystem/home');
     } catch (error) {
         console.error('Erro ao deletar o calçado:', error);
         res.status(500).send(error.message);
