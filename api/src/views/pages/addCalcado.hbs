@@ -17,15 +17,22 @@
             <section>
                 <h2>Sobre este site</h2>
                 <p>Bem-vindo ao nosso sistema de gestão de estoque de calçados! Este site foi desenvolvido pensando em você, oferecendo uma experiência simples e intuitiva para gerenciar seu inventário. Adicione, atualize e remova produtos com facilidade, mantendo seu estoque sempre organizado.
-                    Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
+                Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
+            </section>
+
+            <section>
+                <h2>Nome:</h2>
+                <form>
+                    <input type="text" id="nome" name="nome" placeholder="Digite o nome do calçado" required value="{{shoe.name}}">
+                </form>
             </section>
 
             <section>
                 <h2>Gênero:</h2>
                 <form>
                     <select name="genero" id="genero">
-                        <option value="feminino">Feminino</option>
-                        <option value="masculino">Masculino</option>
+                        <option value="{{shoe.gender}}">Feminino</option>
+                        <option value="{{shoe.gender}}">Masculino</option>
                     </select>
                 </form>
             </section>
@@ -34,10 +41,10 @@
                 <h2>Categoria:</h2>
                 <form>
                     <select name="categoria" id="categoria">
-                        <option value="sapatilha">Sapatilha</option>
-                        <option value="scarpin">Scarpin</option>
-                        <option value="tenis">Tênis</option>
-                        <option value="chinelo">Chinelo</option>
+                        <option value="">Selecione uma categoria</option>
+                        {{#each categories}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                        {{/each}}
                     </select>
                 </form>
             </section>
@@ -57,28 +64,35 @@
             <section>
                 <h2>Cor:</h2>
                 <form>
-                    <input type="text" id="cor" name="cor" placeholder="Digite sua resposta...">
+                    <input type="text" id="cor" name="cor" placeholder="Digite a cor do calçado" required value="{{shoe.color}}">
                 </form>
             </section>
 
             <section>
                 <h2>Tamanho:</h2>
                 <form>
-                    <input type="text" id="tamanho" name="tamanho" placeholder="Digite sua resposta...">
+                    <input type="text" id="tamanho" name="tamanho" placeholder="Digite o tamanho do calçado" required value="{{shoe.size}}">
                 </form>
             </section>
 
             <section>
                 <h2>Preço:</h2>
                 <form>
-                    <input type="text" id="preco" name="preco" placeholder="Digite sua resposta...">
+                    <input type="text" id="preco" name="preco" placeholder="Digite o preço" required value="{{shoe.price}}">
+                </form>
+            </section>
+
+            <section>
+                <h2>Quantidade:</h2>
+                <form>
+                    <input type="number" id="quantidade" name="quantidade" placeholder="Digite a quantidade" required value="{{shoe.quantity}}">
                 </form>
             </section>
 
             <section>
                 <h2>Quantidade em estoque:</h2>
                 <form>
-                    <input type="number" id="quantidade" name="quantidade" placeholder="Quantidade disponível..." readonly>
+                    <input type="number" id="quantidadeEstoque" name="quantidadeEstoque"  readonly>
                 </form>
             </section>
 

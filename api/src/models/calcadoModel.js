@@ -12,6 +12,16 @@ const calçadoSchema = mongoose.Schema({
             message: 'Nome inválido! O nome deve conter apenas caracteres alfabéticos.'
         }
     },
+    gender: {
+        type: String,
+        required: true,
+        validate: {
+            validator: function(value) {
+                return ['masculino', 'feminino'].includes(value.toLowerCase());
+            },
+            message: 'Gênero inválido! O gênero deve ser "masculino" ou "feminino".'
+        }
+    },
     size: {
         type: Number,
         required: true,

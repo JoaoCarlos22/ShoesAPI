@@ -49,6 +49,7 @@ const getCalçado = async (req, res) => {
     }
 } 
 
+// Renderiza a página para cadastro de um novo calçado
 const getCadastroCalçado = async (req, res) => {
     res.render('pages/addCalcado', {
         title: 'Novo Calçado',
