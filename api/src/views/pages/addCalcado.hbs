@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calçados</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="sobremim.html">Sobre a empresa</a></li>
+                <li><a href="project.html">Projetos</a></li>
+                <li><a href="contact.html">Contato</a></li>
+            </ul>
+        </nav>
+
+        <header>
+            <h1>Foot Couture</h1>
+            <h2>Organize aqui seus calçados!</h2>
+        </header>
+
+        <main>
+            <section>
+                <h2>Sobre este site</h2>
+                <p>Bem-vindo ao nosso sistema de gestão de estoque de calçados! Este site foi desenvolvido pensando em você, oferecendo uma experiência simples e intuitiva para gerenciar seu inventário. Adicione, atualize e remova produtos com facilidade, mantendo seu estoque sempre organizado.
+                    Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
+            </section>
+
+            <section>
+                <h2>Gênero:</h2>
+                <form>
+                    <select name="genero" id="genero">
+                        <option value="feminino">Feminino</option>
+                        <option value="masculino">Masculino</option>
+                    </select>
+                </form>
+            </section>
+
+            <section>
+                <h2>Categoria:</h2>
+                <form>
+                    <select name="categoria" id="categoria">
+                        <option value="sapatilha">Sapatilha</option>
+                        <option value="scarpin">Scarpin</option>
+                        <option value="tenis">Tênis</option>
+                        <option value="chinelo">Chinelo</option>
+                    </select>
+                </form>
+            </section>
+
+            <section>
+                <h2>Marca:</h2>
+                <form>
+                    <select name="marca" id="marca">
+                        <option value="sapatinhodeluxo">Sapatinho de Luxo</option>
+                        <option value="vizzano">Vizzano</option>
+                        <option value="olympikus">Olympikus</option>
+                        <option value="kenner">Kenner</option>
+                    </select>
+                </form>
+            </section>
+
+            <section>
+                <h2>Cor:</h2>
+                <form>
+                    <input type="text" id="cor" name="cor" placeholder="Digite sua resposta...">
+                </form>
+            </section>
+
+            <section>
+                <h2>Tamanho:</h2>
+                <form>
+                    <input type="text" id="tamanho" name="tamanho" placeholder="Digite sua resposta...">
+                </form>
+            </section>
+
+            <section>
+                <h2>Preço:</h2>
+                <form>
+                    <input type="text" id="preco" name="preco" placeholder="Digite sua resposta...">
+                </form>
+            </section>
+
+            <section>
+                <h2>Quantidade em estoque:</h2>
+                <form>
+                    <input type="number" id="quantidade" name="quantidade" placeholder="Quantidade disponível..." readonly>
+                </form>
+            </section>
+
+            <section>
+                <h2>Remover do estoque:</h2>
+                <form>
+                    <input type="number" id="remover" name="remover" placeholder="Quantidade a remover...">
+                    <button type="submit">Remover</button>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <p class="paragrafo-footer">&copy; Aqui você não perde tempo!!!</p>
+        </footer>
+    </div>
+</body>
+</html>
