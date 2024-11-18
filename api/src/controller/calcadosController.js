@@ -49,6 +49,14 @@ const getCalçado = async (req, res) => {
     }
 } 
 
+const getCadastroCalçado = async (req, res) => {
+    res.render('pages/addCalcado', {
+        title: 'Novo Calçado',
+        style: 'addCalcado.css',
+        categories: await Categoria.find({})
+    })
+}
+
 // Registra um novo calçado
 const createCalçado = async (req, res) => {
     try{
@@ -147,6 +155,7 @@ const deleteCalçado = async (req, res) => {
 module.exports = {
     getCalçados,
     getCalçado,
+    getCadastroCalçado,
     createCalçado,
     createCategory,
     updateCalçado,
