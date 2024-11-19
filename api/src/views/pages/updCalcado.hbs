@@ -1,45 +1,43 @@
-<div class="body">
-    <div class="container">
-        <main>
-            <form action="/ShoesSystem/updCalcado/:id" method="put">
-                <section>
-                    <h2>Nome:</h2>
-                    <input id="name" name="name" value="{{shoe.name}}" readonly>
-                </section>
-                <section>
-                    <h2>Gênero:</h2>
-                    <input id="gender" name="gender" value="{{shoe.gender}}" readonly>
-                </section>
-                <section>
-                    <h2>Categoria:</h2>
-                    <input id="category" name="category" value="{{shoe.category.name}}" readonly>
-                </section>
-                <section>
-                    <h2>Marca:</h2>
-                    <input id="brand" name="brand" value= "{{shoe.brand}}" readonly>
-                </section>
-                <section>
-                    <h2>Cor:</h2>
-                    <input id="color" name="color" value="{{shoe.color}}"  readonly>
-                </section>
-                <section>
-                    <h2>Tamanho:</h2>
-                    <input id="size" name="size" value="{{shoe.size}}" readonly>
-                </section>
-                <section>
-                    <h2>Preço:</h2>
-                    <input type="text" id="price" name="price" placeholder="Digite o preço do calçado"  required value="{{shoe.price}}" >
-                </section>
-                <section>
-                    <h2>Quantidade:</h2>
-                    <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required value="{{shoe.quantity}}" >
-                </section>                  
-                <section>
-                    <button type="submit">
-                        Atualizar
-                    </button>
-                </section>
-            </form>  
-        </main>
-    </div>
+<div class="container">
+    <main>
+        <form action="/ShoesSystem/updCalcado/:id" method="put">
+            <section>
+                <h2>Nome:</h2>
+                <input id="name" name="name" value="{{shoe.name}}" readonly>
+            </section>
+            <section>
+                <h2>Gênero:</h2>
+                <input id="gender" name="gender" value="{{shoe.gender}}" readonly>
+            </section>
+            <section>
+                <h2>Categoria:</h2>
+                <input id="category" name="category" value="{{shoe.category.name}}" readonly>
+            </section>
+            <section>
+                <h2>Marca:</h2>
+                <input id="brand" name="brand" value= "{{shoe.brand}}" readonly>
+            </section>
+            <section>
+                <h2>Cor:</h2>
+                <input id="color" name="color" value="{{shoe.color}}"  readonly>
+            </section>
+            <section>
+                <h2>Tamanho:</h2>
+                <input id="size" name="size" value="{{shoe.size}}" readonly>
+            </section>
+            <section>
+                <h2>Preço:</h2>
+                <input type="text" id="price" name="price" placeholder="Digite o preço do calçado"  required value="{{shoe.price}}" >
+            </section>
+            <section>
+                <h2>Quantidade:</h2>
+                <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required value="{{shoe.quantity}}" >
+            </section>                  
+            <section>
+                <button type="submit">
+                    Atualizar
+                </button>
+            </section>
+        </form>  
+    </main>
 </div>

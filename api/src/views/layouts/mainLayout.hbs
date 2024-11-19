@@ -8,6 +8,69 @@
     <link rel="stylesheet" href="/{{style}}">
 </head>
 <body>
+    <style>
+        /* margens e paddings padrão */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo do documento */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        /* Navegação */
+        nav {
+            background-color: #000000;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #bdbdbd;
+        }
+
+        /* Rodapé */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #000000;
+            color: white;
+            font-size: 0.8rem;
+            border-top: 2px solid #757575;
+        }
+
+        footer a {
+            color: #bdbdbd;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+
     <nav>
         <ul>
             <li><a target="_blank" href="#">Sobre a empresa</a></li>

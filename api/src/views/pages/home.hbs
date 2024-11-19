@@ -1,44 +1,42 @@
-<div class="body">
-    <div class="container">    
-      <header>
-        <h1>Foot Couture</h1>
-        <h2>Organize aqui seus calçados!</h2>
-      </header>
-      
-      <section>
-        <h2>Sobre este site</h2>
-        <p>Bem-vindo ao nosso sistema de gestão de estoque de calçados! Este site foi desenvolvido pensando em você, oferecendo uma experiência simples e intuitiva para gerenciar seu inventário. Adicione, atualize e remova produtos com facilidade, mantendo seu estoque sempre organizado.
-        Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
-      </section>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Tamanho</th>
-          <th>Gênero</th>
-          <th>Cor</th>
-          <th>Marca</th>
-          <th>Preço</th>
-          <th>Quantidade</th>
-          <th>Categoria</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each shoes}}
-          <tr>
-            <td>{{this.name}}</td>
-            <td>{{this.size}}</td>
-            <td>{{this.gender}}</td>
-            <td>{{this.color}}</td>
-            <td>{{this.brand}}</td>
-            <td>R$ {{this.price}}</td>
-            <td>{{this.quantity}}</td>
-            <td>{{this.category.name}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+  <div class="container">    
+    <header>
+      <h1>Foot Couture</h1>
+      <h2>Organize aqui seus calçados!</h2>
+    </header>
+    
+    <section>
+      <h2>Sobre este site</h2>
+      <p>Bem-vindo ao nosso sistema de gestão de estoque de calçados! Este site foi desenvolvido pensando em você, oferecendo uma experiência simples e intuitiva para gerenciar seu inventário. Adicione, atualize e remova produtos com facilidade, mantendo seu estoque sempre organizado.
+      Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
+    </section>
   </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Tamanho</th>
+        <th>Gênero</th>
+        <th>Cor</th>
+        <th>Marca</th>
+        <th>Preço</th>
+        <th>Quantidade</th>
+        <th>Categoria</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each shoes}}
+        <tr>
+          <td>{{this.name}}</td>
+          <td>{{this.size}}</td>
+          <td>{{this.gender}}</td>
+          <td>{{this.color}}</td>
+          <td>{{this.brand}}</td>
+          <td>R$ {{this.price}}</td>
+          <td>{{this.quantity}}</td>
+          <td>{{this.category.name}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>

@@ -1,63 +1,61 @@
-<div class="body">
-    <div class="container">
-        <header>
-            <h1>Foot Couture</h1>
-            <h2>Organize aqui seus calçados!</h2>
-        </header>
+<div class="container">
+    <header>
+        <h1>Foot Couture</h1>
+        <h2>Organize aqui seus calçados!</h2>
+    </header>
 
-        <main>
-            <form action="/ShoesSystem/addCalcado" method="post">
-                <section>
-                    <h2>Nome:</h2>
-                    <input type="text" id="name" name="name" placeholder="Digite o nome do calçado" required>
-                </section>
-                <section>
-                    <h2>Gênero:</h2>
-                    <select name="gender" id="gender">
-                        <option value="Feminino">Feminino</option>
-                        <option value="Masculino">Masculino</option>
-                    </select>  
-                </section>
-                <section>
-                    <h2>Categoria:</h2>
-                    <select name="category" id="category">
-                        <option value="">Selecione uma categoria</option>
-                        {{#each categories}}
-                        <option value="{{this._id}}">{{this.name}}</option>
-                        {{/each}}
-                    </select>
-                </section>
-                <section>
-                    <h2>Marca:</h2>
-                    <select name="brand" id="brand">
-                        <option value="sapatinhodeluxo">Sapatinho de Luxo</option>
-                        <option value="vizzano">Vizzano</option>
-                        <option value="olympikus">Olympikus</option>
-                        <option value="kenner">Kenner</option>
-                    </select>
-                </section>
-                <section>
-                    <h2>Cor:</h2>
-                    <input type="text" id="color" name="color" placeholder="Digite a cor do calçado" required>
-                </section>
-                <section>
-                    <h2>Tamanho:</h2>
-                    <input type="text" id="size" name="size" placeholder="Digite o tamanho do calçado" required>
-                </section>
-                <section>
-                    <h2>Preço:</h2>
-                    <input type="text" id="price" name="price" placeholder="Digite o preço" required>
-                </section>
-                <section>
-                    <h2>Quantidade:</h2>
-                    <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required>
-                </section>                  
-                <section>
-                    <button type="submit">
-                        Adicionar
-                    </button>
-                </section>
-            </form>  
-        </main>
-    </div>
+    <main>
+        <form action="/ShoesSystem/addCalcado" method="post">
+            <section>
+                <h2>Nome:</h2>
+                <input type="text" id="name" name="name" placeholder="Digite o nome do calçado" required>
+            </section>
+            <section>
+                <h2>Gênero:</h2>
+                <select name="gender" id="gender">
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                </select>  
+            </section>
+            <section>
+                <h2>Categoria:</h2>
+                <select name="category" id="category">
+                    <option value="">Selecione uma categoria</option>
+                    {{#each categories}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </section>
+            <section>
+                <h2>Marca:</h2>
+                <select name="brand" id="brand">
+                    <option value="sapatinhodeluxo">Sapatinho de Luxo</option>
+                    <option value="vizzano">Vizzano</option>
+                    <option value="olympikus">Olympikus</option>
+                    <option value="kenner">Kenner</option>
+                </select>
+            </section>
+            <section>
+                <h2>Cor:</h2>
+                <input type="text" id="color" name="color" placeholder="Digite a cor do calçado" required>
+            </section>
+            <section>
+                <h2>Tamanho:</h2>
+                <input type="text" id="size" name="size" placeholder="Digite o tamanho do calçado" required>
+            </section>
+            <section>
+                <h2>Preço:</h2>
+                <input type="text" id="price" name="price" placeholder="Digite o preço" required>
+            </section>
+            <section>
+                <h2>Quantidade:</h2>
+                <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required>
+            </section>                  
+            <section>
+                <button type="submit">
+                    Adicionar
+                </button>
+            </section>
+        </form>  
+    </main>
 </div>
