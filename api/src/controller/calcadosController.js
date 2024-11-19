@@ -133,7 +133,7 @@ const getUpdateCalçado = async (req, res) => {
         res.render('pages/updCalcado', {
             title: 'Atualizar calçado',
             style: 'updCalcado.css',
-            js: 'btn-delete.js',
+            //js: 'btn-delete.js',
             shoe: calçado
         });
     } catch (error) {
