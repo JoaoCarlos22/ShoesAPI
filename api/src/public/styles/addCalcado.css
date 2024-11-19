@@ -1,4 +1,3 @@
-
 /* Conainer principal */
 .container {
     max-width: 800px;
@@ -29,6 +28,13 @@ header h2 {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
 
+/* Seções */
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 section {
     background-color: #ffffff;
@@ -43,14 +49,39 @@ section h2 {
     margin-bottom: 10px;
 }
 
-table {
-    background-color: #ccc;
+form select,
+form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #757575;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
 }
 
-thead {
-    background-color: sandybrown
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-tbody {
-    background-color: rgb(105, 219, 105);
+/* Estilos de responsividade */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    header {
+        padding: 40px 15px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header h2 {
+        font-size: 0.9rem;
+    }
 }

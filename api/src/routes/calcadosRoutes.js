@@ -8,8 +8,8 @@ router.get('/calcado/:id', getCalçado);
 router.get('/addCalcado', getCadastroCalçado);
 router.post('/addCalcado', createCalçado);
 router.get('/updCalcado/:id', getUpdateCalçado);
-router.put('/updCalcado/:id', updateCalçado);
-router.delete('/delCalcado/:id', deleteCalçado);
+router.post('/updCalcado/:id', updateCalçado);
+router.post('/delCalcado/:id', deleteCalçado);
 router.post('/addCategoria', createCategory);
 
 module.exports = router;

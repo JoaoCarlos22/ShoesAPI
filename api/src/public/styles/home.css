@@ -1,0 +1,96 @@
+
+/* Conainer principal */
+.container-inicial {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Cabeçalho */
+header {
+    text-align: center;
+    padding: 60px 15px;
+    background: url('calcados2.jpg') no-repeat center center/cover;
+    color: white;
+    border-bottom: 2px solid #000000;
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+header h2 {
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+section {
+    background-color: #ffffff;
+    border: 1px solid #bdbdbd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+section h2 {
+    font-size: 1rem;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.container-add-recent {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+.container-add-recent h2 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
+}
+  
+.fields {
+    list-style: none;
+    padding: 0;
+}
+  
+.fields li {
+    margin: 10px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+  
+.fields li:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+  
+.fields li label {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+}
+  
+.fields li label:first-child {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+  

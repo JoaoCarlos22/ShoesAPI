@@ -152,8 +152,8 @@ const updateCalçado = async (req, res) => {
         }  
         
         // atualiza os dados do calçado (quantidade e/ou preço)
-        calçado.quantity = req.body.quantity;
         calçado.price = req.body.price;
+        calçado.quantity = req.body.quantity;
         
         // salva os dados do calçado e volta para a Home
         await calçado.save();

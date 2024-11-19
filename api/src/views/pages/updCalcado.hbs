@@ -1,6 +1,6 @@
 <div class="container">
     <main>
-        <form action="/ShoesSystem/updCalcado/:id" method="put">
+        <form action="/ShoesSystem/updCalcado/{{shoe._id}}" method="post">
             <section>
                 <h2>Nome:</h2>
                 <input id="name" name="name" value="{{shoe.name}}" readonly>
@@ -37,7 +37,11 @@
                 <button type="submit">
                     Atualizar
                 </button>
+               
             </section>
-        </form>  
+        </form>
+        <form action="/ShoesSystem/delCalcado/{{shoe._id}}" method="post">
+            <button type="submit">Excluir</button>
+        </form>
     </main>
 </div>

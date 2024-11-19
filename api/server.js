@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/ShoesSystem',calçadosRoutes)
 
 // Configurações de arquivos estáticos (CSS, JS, imagens)
-app.use(express.static(path.join(__dirname, 'src/styles')));
+app.use(express.static(path.join(__dirname, 'src/public')));
 
 // Configurações do Express Handlebars (template engine)
 app.set('views', path.join(__dirname, 'src/views'))
