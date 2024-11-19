@@ -20,6 +20,8 @@
   /* Campos do calçado */
   .shoe-details {
     margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 20px;
   }
   
   .shoe-field {
@@ -30,40 +32,56 @@
   .shoe-field strong {
     color: #555;
   }
-  
-  /* Botões de ação */
-  .actions {
+
+  .actions{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 10px;
   }
   
-  .actions .btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-  }
-  
-  .actions .btn-edit {
-    background-color: #007bff;
-    color: white;
-    transition: background-color 0.3s;
-  }
-  
-  .actions .btn-edit:hover {
-    background-color: #0056b3;
-  }
-  
-  .actions .btn-back {
-    background-color: #6c757d;
-    color: white;
-    transition: background-color 0.3s;
-  }
-  
-  .actions .btn-back:hover {
-    background-color: #5a6268;
-  }
-  
+  /* Estilo base para os botões */
+.actions .btn {
+    border: 1px solid #dc3545; /* Borda vermelha */
+    background-color: transparent; /* Fundo transparente */
+    color: #dc3545; /* Cor do texto vermelha */
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease; /* Animação suave */
+}
+
+/* Estilo ao passar o mouse */
+.actions .btn:hover {
+    background-color: #dc3545; /* Fundo vermelho */
+    color: #fff; /* Texto branco */
+    border-color: #dc3545; /* Mesma cor da borda */
+}
+
+/* Específico para o botão de excluir */
+.actions .btn-danger {
+    border-color: #dc3545; /* Cor padrão da borda */
+}
+
+/* Específico para o botão de editar */
+.actions .btn-edit {
+    border-color: #0d6efd; /* Azul padrão para editar */
+    color: #0d6efd;
+}
+
+.actions .btn-edit:hover {
+    background-color: #0d6efd; /* Fundo azul no hover */
+    color: #fff; /* Texto branco */
+    border-color: #0d6efd;
+}
+
+/* Botão de voltar */
+.actions .btn-back {
+    border-color: #6c757d; /* Cinza padrão */
+    color: #6c757d;
+}
+
+.actions .btn-back:hover {
+    background-color: #6c757d; /* Fundo cinza */
+    color: #fff; /* Texto branco */
+    border-color: #6c757d;
+}
