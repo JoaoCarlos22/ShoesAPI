@@ -32,7 +32,7 @@ app.set('view engine', '.hbs')
 // Conecta ao banco de dados MongoDB e inicia o servidor web
 connectDB()
 .then(data => {
-    console.log(' >> banco de dados conectado com sucesso:\n')
+    console.log(' >> Banco de dados conectado com sucesso:\n')
     app.listen(8000, () => {
         console.log('Servidor rodando na porta 8000:\n')
     }).on('error', err =>
