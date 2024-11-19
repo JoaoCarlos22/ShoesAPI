@@ -47,10 +47,10 @@
 /* Estilo para as imagens dentro dos cards */
 .card img {
   width: 60%; /* Faz com que a imagem ocupe toda a largura do card */
-  height: 200px; /* Define a altura da imagem */
+  width: 65%; /* Faz com que a imagem ocupe toda a largura do card */
+  height: 250px; /* Define a altura da imagem */
   object-fit: cover; /* Escala a imagem para preencher todo o container, mantendo as proporções */
 }
-
 
 .container-add-recent {
     max-width: 600px;
