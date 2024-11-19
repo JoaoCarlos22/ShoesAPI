@@ -1,0 +1,35 @@
+<main class="shoe-details-container">
+  <h1>Detalhes do Calçado</h1>
+  
+  <div class="shoe-details">
+    <div class="shoe-field">
+      <strong>Nome:</strong> {{shoe.name}}
+    </div>
+    <div class="shoe-field">
+      <strong>Gênero:</strong> {{shoe.gender}}
+    </div>
+    <div class="shoe-field">
+      <strong>Tamanho:</strong> {{shoe.size}}
+    </div>
+    <div class="shoe-field">
+      <strong>Cor:</strong> {{shoe.color}}
+    </div>
+    <div class="shoe-field">
+      <strong>Marca:</strong> {{shoe.brand}}
+    </div>
+    <div class="shoe-field">
+      <strong>Preço:</strong> R$ {{shoe.price}}
+    </div>
+    <div class="shoe-field">
+      <strong>Quantidade:</strong> {{shoe.quantity}}
+    </div>
+    <div class="shoe-field">
+      <strong>Categoria:</strong> {{shoe.category.name}}
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-edit" onclick="window.location.href='/ShoesSystem/updCalcado/{{shoe._id}}'">Editar</button>
+    <button class="btn btn-back" onclick="window.location.href='/ShoesSystem/home'">Voltar</button>
+  </div>
+</main>

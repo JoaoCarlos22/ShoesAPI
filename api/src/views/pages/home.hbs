@@ -16,7 +16,7 @@
       <h2>Adicionados recentemente</h2>
       <ul class="fields">
         {{#each shoes}}
-          <li>
+          <li data-id="{{this._id}}">
               <label>{{this.name}}</label>
               <label>{{this.gender}}</label>
               <label>{{this.size}}</label>

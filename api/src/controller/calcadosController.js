@@ -13,6 +13,7 @@ const getCalçados = async (req, res) => {
             res.render('pages/home', {
               title: 'Home',
               style: 'home.css',
+              js: 'home.js',
               shoes: calçados
             });
           } else {
