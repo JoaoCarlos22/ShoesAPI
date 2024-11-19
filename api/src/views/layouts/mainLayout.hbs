@@ -16,8 +16,6 @@
             padding: 0; /* Remove o preenchimento padrão do corpo */
         }
 
-        
-
         /* Estilo para o cabeçalho principal */
         .main-header {
             display: flex; /* Transforma o elemento em um container flexbox */
@@ -26,6 +24,10 @@
             padding: 20px; /* Adiciona um espaço interno ao cabeçalho */
             background-color: #dad4ce; /* Define a cor de fundo do cabeçalho */
             color: #000000; /* Define a cor do texto do cabeçalho */
+        }
+
+        .logo a{
+            cursor: pointer;
         }
 
         /* Estilo para o menu do usuário */
@@ -56,13 +58,23 @@
             padding: 5px; /* Adiciona um espaço interno ao banner */
             font-size: 15px; /* Define o tamanho da fonte do texto */
         }
-        /* Estilo para o rodapé */
         footer {
             background-color:#A68DAD; /* Cor de fundo */
             color: #130e0e; /* Cor do texto */
-            padding: 20px;
             text-align: center;
+            padding: 20px;
         }
+
+        footer nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        footer nav li {
+            margin: 0 10px;
+        }
+        
     </style>
 
 
@@ -73,7 +85,8 @@
             
             <!-- Título/logo da empresa -->
             <div class="logo">
-                <h1>Iannuzzi</h1>
+                <a onclick="window.location.href='/ShoesSystem/home'"><h1>Iannuzzi</h1></a>
+                
             </div>
 
             <!-- Menu de navegação do usuário -->
@@ -104,6 +117,14 @@
     {{{ body }}}
 
     <footer>
+        <p>&copy; 2024 Iannuzzi. Todos os direitos reservados.</p>
+        <nav>
+            <ul>
+                <li><a href="#">Sobre nós</a></li>
+                <li><a href="#">Contato</a></li>
+                <li><a href="#">Política de privacidade</a></li>
+                </ul>
+        </nav>
     </footer>
 </body>
 </html>

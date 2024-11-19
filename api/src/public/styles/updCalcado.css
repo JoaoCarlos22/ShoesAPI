@@ -9,26 +9,6 @@
     overflow: hidden;
 }
 
-/* Cabeçalho */
-header {
-    text-align: center;
-    padding: 60px 15px;
-    background: url('calcados2.jpg') no-repeat center center/cover;
-    color: white;
-    border-bottom: 2px solid #000000;
-}
-
-header h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-}
-
-header h2 {
-    font-size: 1rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
 /* Seções */
 main {
     padding: 20px;
@@ -52,7 +32,7 @@ section h2 {
 
 form select,
 form input {
-    width: 100%;
+    width: 700px;
     padding: 10px;
     border: 1px solid #757575;
     border-radius: 5px;

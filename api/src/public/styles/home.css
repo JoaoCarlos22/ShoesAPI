@@ -63,6 +63,7 @@
 }
   
 .container-add-recent h2 {
+    
     margin-bottom: 15px;
     font-size: 24px;
     color: #333;
@@ -104,19 +105,12 @@
     color: #333;
 }
 
-footer {
-    background-color:#A68DAD; /* Cor de fundo */
-    color: #130e0e; /* Cor do texto */
-    padding: 20px;
-    text-align: center;
-}
-
 .btn-adicionar {
     background-color: #dad4ce; /* Cor de fundo */
-    color: #ffffff; /* Cor do texto */
+    color: #000000; /* Cor do texto */
     border: 1px solid #dad4ce; /* Borda */
     border-radius: 4px;
-    padding: 10px 10px;
+    padding: 10px 40px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -124,5 +118,14 @@ footer {
   
   .btn-adicionar:hover {
     background-color: #9c49b3; /* Cor ao passar o mouse */
+  }
+
+  .footer {
+    background-color: #f0f0f0; /* Cor de fundo levemente contrastante */
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px auto; /* Centraliza a seção e adiciona margens */
   }
   
