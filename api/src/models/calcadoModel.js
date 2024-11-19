@@ -27,7 +27,7 @@ const calçadoSchema = mongoose.Schema({
         required: true,
         validate: {
             validator: function(value) {
-                return value >= 37 && value <= 45;
+                return value >= 35 && value <= 45;
             },
             message: 'Tamanho inválido! O tamanho deve estar entre 37 e 45.'
         }

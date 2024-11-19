@@ -1,15 +1,12 @@
 const Calçado = require("../models/calcadoModel.js");
 const Categoria = require("../models/categoriaModel.js");
-const ObjectId = require('mongoose').Types.ObjectId;
 
 // Lista todos os calçados existentes no banco
 const getCalçados = async (req, res) => {
     try{
         // busca todos os calçados no banco de dados com find() e retorna um array de calçados e exibe o nome da categoria inves do id
         const calçados = await Calçado.find({})
-        .populate('category', 'name'); 
-
-        console.log(calçados)
+        .populate('category', 'name');
         
         // verifica se há algum calçado
         if (calçados.length > 0) {
@@ -31,7 +28,7 @@ const getCalçados = async (req, res) => {
 const getCalçado = async (req, res) => {
     try{
         // busca o calçado pelo id no banco de dados com findById()
-        const calçado = await Calçado.findById(req.params.id)
+        const calçado = await Calçado.findById(req.params.id).populate('category')
         
         // verifica se o calçado existe
         if (!calçado) {
@@ -119,7 +116,30 @@ const createCalçado = async (req, res) => {
         console.error('Erro ao registrar a categoria:', error);
         res.status(500).send(error.message);
     }
- }
+}
+
+const getUpdateCalçado = async (req, res) => {
+    try{
+        // busca o calçado pelo id no banco de dados com findById()
+        const calçado = await Calçado.findById(req.params.id).populate('category')
+        
+        // verifica se o calçado existe
+        if (!calçado) {
+            return res.status(404).send('Calçado não encontrado!');
+        }
+
+        // renderiza para rota /calcado:id
+        res.render('pages/updCalcado', {
+            title: 'Atualizar calçado',
+            style: 'updCalcado.css',
+            shoe: calçado
+        });
+    } catch (error) {
+        console.error('Erro ao buscar o calçado:', error);
+        res.status(500).send(error.message);
+    }
+} 
+ 
 // Atualiza um calçado
 const updateCalçado = async (req, res) => {
     try{
@@ -169,6 +189,7 @@ module.exports = {
     getCadastroCalçado,
     createCalçado,
     createCategory,
+    getUpdateCalçado,
     updateCalçado,
     deleteCalçado
 }
