@@ -9,80 +9,101 @@
 </head>
 <body>
     <style>
-        /* margens e paddings padrão */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Corpo do documento */
+        /* Estilo geral para a página */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-        /* Navegação */
-        nav {
-            background-color: #000000;
-            padding: 10px 20px;
-            text-align: center;
+            font-family: Arial, sans-serif; /* Define a fonte padrão para o corpo do texto */
+            margin: 0; /* Remove as margens padrão do corpo */
+            padding: 0; /* Remove o preenchimento padrão do corpo */
         }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        
+
+        /* Estilo para o cabeçalho principal */
+        .main-header {
+            display: flex; /* Transforma o elemento em um container flexbox */
+            justify-content: space-between; /* Distribui os itens de forma a ocupar todo o espaço disponível */
+            align-items: center; /* Alinha os itens verticalmente ao centro */
+            padding: 20px; /* Adiciona um espaço interno ao cabeçalho */
+            background-color: #dad4ce; /* Define a cor de fundo do cabeçalho */
+            color: #000000; /* Define a cor do texto do cabeçalho */
         }
 
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            font-size: 14px;
-            text-transform: uppercase;
-            transition: color 0.3s;
+        /* Estilo para o menu do usuário */
+        .user-menu a {
+            color: #130e0e; /* Define a cor dos links do menu */
+            margin-left: 15px; /* Adiciona uma margem à esquerda dos links */
+            text-decoration: none; /* Remove a sublinhado dos links */
         }
 
-        nav ul li a:hover {
-            color: #bdbdbd;
+        /* Estilo para a barra de navegação central */
+        .nav-bar {
+            background-color: #A68DAD; /* Define a cor de fundo da barra */
+            padding: 10px 20px; /* Adiciona um espaço interno à barra */
         }
 
-        /* Rodapé */
+        /* Estilo para os links da navegação principal */
+        .main-nav a {
+            color: #fff; /* Define a cor dos links */
+            margin-right: 15px; /* Adiciona uma margem à direita dos links */
+            text-decoration: none; /* Remove a sublinhado dos links */
+        }
+
+        /* Estilo para o banner promocional */
+        .promo-banner {
+            background-color:#dad4ce; /* Define a cor de fundo do banner */
+            color: #130e0e; /* Define a cor do texto do banner */
+            text-align: center; /* Alinha o texto ao centro */
+            padding: 5px; /* Adiciona um espaço interno ao banner */
+            font-size: 15px; /* Define o tamanho da fonte do texto */
+        }
+        /* Estilo para o rodapé */
         footer {
+            background-color:#A68DAD; /* Cor de fundo */
+            color: #130e0e; /* Cor do texto */
+            padding: 20px;
             text-align: center;
-            padding: 15px;
-            background-color: #000000;
-            color: white;
-            font-size: 0.8rem;
-            border-top: 2px solid #757575;
-        }
-
-        footer a {
-            color: #bdbdbd;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
         }
     </style>
 
 
-    <nav>
-        <ul>
-            <li><a target="_blank" href="#">Sobre a empresa</a></li>
-            <li><a target="_blank" href="#">Projetos</a></li>
-            <li><a target="_blank" href="#">Contato</a></li>
-        </ul>
-    </nav>
+    <!-- Cabeçalho do site -->
+    <header>
+        <!-- Contêiner principal do cabeçalho -->
+        <div class="main-header">
+            
+            <!-- Título/logo da empresa -->
+            <div class="logo">
+                <h1>Iannuzzi</h1>
+            </div>
+
+            <!-- Menu de navegação do usuário -->
+            <nav class="user-menu">
+                <a href="#">História</a>
+                <a href="#">Ajuda</a>
+                <a href="#"><span class="cart-icon">🛒</span>0</a>
+            </nav>
+        </div>
+        
+        <!-- Barra de navegação principal -->
+        <div class="nav-bar">
+            <nav class="main-nav">
+                <a href="#">Lançamentos</a>
+                <a href="#">Masculino</a>
+                <a href="#">Feminino</a>
+                <a href="#">Ofertas</a>
+                <a href="#">Marcas</a>
+            </nav>
+        </div>
+        
+        <!-- Banner promocional -->
+        <div class="promo-banner">
+            <p>Frete grátis para compras acima de R$199,90 | Ganhe <strong>+15% OFF</strong> na primeira compra com o cupom PRIMEIRA15</p>
+        </div>
+    </header>
 
     {{{ body }}}
 
     <footer>
-        <p class="paragrafo-footer">&copy; Aqui você não perde tempo!!!</p>
     </footer>
 </body>
 </html>

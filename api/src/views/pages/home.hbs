@@ -1,17 +1,99 @@
-<div class="container-inical">    
-  <header>
-    <h1>Foot Couture</h1>
-    <h2>Organize aqui seus calçados!</h2>
-  </header>
-  
-  <section>
-    <h2>Sobre este site</h2>
-    <p>Bem-vindo ao nosso sistema de gestão de estoque de calçados! Este site foi desenvolvido pensando em você, oferecendo uma experiência simples e intuitiva para gerenciar seu inventário. Adicione, atualize e remova produtos com facilidade, mantendo seu estoque sempre organizado.
-    Com design prático e funcionalidades otimizadas, acompanhe a movimentação do estoque e melhore a gestão, garantindo mais agilidade. Simplifique sua rotina e tenha controle total da sua loja!</p>
-  </section>
-</div>
-
 <main>
+  <!-- Seção principal de boas-vindas -->
+    <main>
+        <section class="welcome-section">
+            <h2>Bem-vindo à Iannuzzi</h2>
+            <p>Os melhores calçados para toda a família com conforto e estilo.</p>
+        </section>
+    </main>
+
+    <!-- Contêiner de imagens de produtos -->
+    <div class="container">
+        <img src="imagens1/novidade.png" alt="Produto 1" class="imagem-produto">
+        <img src="imagens1/promocao.png" alt="Produto 2" class="imagem-produto">
+    </div>
+
+    <!-- Seção de produtos -->
+    <section class="produtos">
+        <h2>Em estoque</h2>
+        
+        <!-- Carrossel de produtos -->
+        <div class="carrossel">
+            <div class="card">
+                <img src="imagens/Feminino/mocassim_bege.webp" alt="mocassim_bege">
+                <h3>Mocassim (Bege)</h3>
+                <p>R$ 169,90</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Feminino/sandalia_plataforma_tratorada_preta.jpg" alt="sandalia_plataforma_tratorada_preta">
+                <h3>Sandalia Plataforma Tratorada (Preto)</h3>
+                <p>R$ 189,90</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Feminino/scarpin_branco.jpg" alt="scarpin_branco">
+                <h3>Scarpin (Branco)</h3>
+                <p>R$ 99,99</p>
+            </div>
+            <div class="card">
+                <img src="imagens1/bota_cinza.jpg" alt="bota_cinza">
+                <h3>Bota Zeus (Cinza)</h3>
+                <p>R$ 199,99</p>
+            </div>
+        </div>
+    </section><br>
+
+    <!-- Seção adicional de produtos -->
+    <section class="produtos">
+        <div class="carrossel">
+            <div class="card">
+                <img src="imagens/Feminino/mocassim_branco.webp" alt="mocassim_preto">
+                <h3>Mocassim (Branco)</h3>
+                <p>R$ 139,90</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Masculino/rider_branca.jpg" alt="rider_branca">
+                <h3>Chinelo (Branco)</h3>
+                <p>R$ 189,90</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Feminino/sandalia_plataforma_tratorada_bege.webp" alt="sandalia_plataforma_tratorada_bege">
+                <h3>Sandalia Plataforma Tratorada (Branco)</h3>
+                <p>R$ 89,99</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Feminino/sapatilha_preta.webp" alt="sapatilha_preta">
+                <h3>Sapatilha (Preto)</h3>
+                <p>R$ 59,99</p>
+            </div>
+        </div>
+    </section><br>
+
+    <!-- Outra seção de produtos -->
+    <section class="produtos">
+        <div class="carrossel">
+            <div class="card">
+                <img src="imagens/Masculino/pantufa_azul.jpg" alt="pantufa_azul">
+                <h3>Pantufa (Azul)</h3>
+                <p>R$ 69,90</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Masculino/social_preto2.jpg" alt="social_preto2">
+                <h3>Sapato Social (Preto)</h3>
+                <p>R$ 189,90</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Masculino/rider_azul.jpg" alt="rider_azul">
+                <h3>Rider (Azul)</h3>
+                <p>R$ 99,99</p>
+            </div>
+            <div class="card">
+                <img src="imagens/Masculino/tenisolympikus_cinza.webp" alt="tenisolympikus_cinza">
+                <h3>Tênis (Cinza)</h3>
+                <p>R$ 179,00</p>
+            </div>
+        </div>
+    </section>
+
   <div class="container-add-recent">
       <h2>Adicionados recentemente</h2>
       <ul class="fields">
@@ -30,6 +112,13 @@
       </ul>
   </div>
 </main>
+<footer>
+  <p>Aqui você vendedor pode adicionar novos calçados:</p>
+    <button class="btn-adicionar">
+        <i class="fas fa-plus-circle"></i> <a href="addCalcado.html">Adicione aqui o seu calçado</a>
+  </button>
+</footer>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {

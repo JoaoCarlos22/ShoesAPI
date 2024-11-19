@@ -1,46 +1,56 @@
-
-/* Conainer principal */
-.container-inicial {
-    max-width: 600px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+/* Estilo para a seção de boas-vindas */
+.welcome-section {
+  background-color: #fff; /* Define a cor de fundo da seção */
+  padding: 20px; /* Adiciona um espaço interno à seção */
+  margin-bottom: 10px; /* Diminui a margem inferior para aproximar as imagens */
+  text-align: center; /* Alinha o texto ao centro */
 }
 
-/* Cabeçalho */
-header {
-    text-align: center;
-    padding: 60px 15px;
-    background: url('calcados2.jpg') no-repeat center center/cover;
-    color: white;
-    border-bottom: 2px solid #000000;
+/* Imagens de promoção e novidade */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto; /* Remove a altura fixa para permitir que o contêiner se ajuste ao conteúdo */
+  margin-top: 0; /* Remove a margem superior */
 }
 
-header h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+/* Estilo para as imagens dentro do contêiner */
+.imagem-produto {
+  width: 500px; /* Ajuste o tamanho conforme necessário */
+  height: 500px;
+  object-fit: cover;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  margin: 10px; /* Reduz a margem para aproximar ainda mais */
 }
 
-header h2 {
-    font-size: 1rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+/* Estilo para a seção dos produtos */
+.produtos {
+  text-align: center; /* Centraliza o conteúdo da seção */
 }
 
-section {
-    background-color: #ffffff;
-    border: 1px solid #bdbdbd;
-    padding: 15px;
-    border-radius: 5px;
+/* Estilo para o container do carrossel */
+.carrossel {
+  display: flex; /* Transforma o container em um flexbox para organizar os itens em linha */
+  scroll-snap-type: x mandatory; /* Faz com que cada card "atraia" o scroll */
 }
 
-section h2 {
-    font-size: 1rem;
-    color: #000000;
-    margin-bottom: 10px;
+/* Estilo para cada card (produto) */
+.card {
+  flex: 0 0 25%; /* Garante que cada card ocupe 25% da largura total */
+  min-width: 200px; /* Define a largura mínima para cada card */
+  padding: 5px; /* Adiciona espaço interno ao redor do conteúdo do card */
+  text-align: center; /* Centraliza o conteúdo dentro do card */
 }
+
+/* Estilo para as imagens dentro dos cards */
+.card img {
+  width: 60%; /* Faz com que a imagem ocupe toda a largura do card */
+  height: 200px; /* Define a altura da imagem */
+  object-fit: cover; /* Escala a imagem para preencher todo o container, mantendo as proporções */
+}
+
 
 .container-add-recent {
     max-width: 600px;
@@ -93,4 +103,26 @@ section h2 {
     font-size: 18px;
     color: #333;
 }
+
+footer {
+    background-color:#A68DAD; /* Cor de fundo */
+    color: #130e0e; /* Cor do texto */
+    padding: 20px;
+    text-align: center;
+}
+
+.btn-adicionar {
+    background-color: #dad4ce; /* Cor de fundo */
+    color: #ffffff; /* Cor do texto */
+    border: 1px solid #dad4ce; /* Borda */
+    border-radius: 4px;
+    padding: 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn-adicionar:hover {
+    background-color: #9c49b3; /* Cor ao passar o mouse */
+  }
   
