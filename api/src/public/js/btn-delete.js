@@ -1,18 +1,17 @@
 // Função para tratar o clique no botão de excluir
 function excluirCalcado(event) {
-    const botaoExcluir = event.target;
-    const shoeId = botaoExcluir.dataset.shoeId;
-  
-    // Resto do código para enviar a requisição, como no exemplo anterior
+  const botaoExcluir = event.currentTarget;
+  const shoeId = botaoExcluir.getAttribute('data-shoe-id');
+
+  if (confirm('Tem certeza que deseja excluir este calçado?')) {
     fetch(`/ShoesSystem/delCalcado/${shoeId}`, {
       method: 'POST',
-      body: new FormData()
     })
-    // ...
+    window.location.href = '/ShoesSystem/home';
   }
-  
-  // Adiciona um event listener a todos os botões de exclusão
-  const botoesExcluir = document.querySelectorAll('.btn-excluir');
-  botoesExcluir.forEach(botao => {
-    botao.addEventListener('click', excluirCalcado);
-  });
+}
+
+// Adicionar evento ao botão de excluir
+document
+  .querySelector(`#btn-excluir-{{shoe._id}}`)
+  .addEventListener('click', excluirCalcado);

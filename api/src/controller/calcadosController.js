@@ -7,18 +7,12 @@ const getCalçados = async (req, res) => {
         // busca todos os calçados no banco de dados com find() e retorna um array de calçados e exibe o nome da categoria inves do id
         const calçados = await Calçado.find({})
         .populate('category', 'name');
-        
-        // verifica se há algum calçado
-        if (calçados.length > 0) {
-            res.render('pages/home', {
-              title: 'Home',
-              style: 'home.css',
-              js: 'home.js',
-              shoes: calçados
-            });
-          } else {
-            res.status(404).send('Banco de dados vazio!');
-          }
+        res.render('pages/home', {
+            title: 'Home',
+            style: 'home.css',
+            //js: 'home.js',
+            shoes: calçados
+        });
     }catch(error){
         console.error('Erro ao buscar os calçados existentes:', error);
         res.status(500).send(error.message)
@@ -40,6 +34,7 @@ const getCalçado = async (req, res) => {
         res.render('pages/calcado', {
             title: 'Calçado',
             style: 'calcado.css',
+            //js: 'btn-delete.js',
             shoe: calçado
         });
     } catch (error) {

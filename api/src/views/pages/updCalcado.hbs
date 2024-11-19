@@ -55,18 +55,7 @@
       fetch(`/ShoesSystem/delCalcado/${shoeId}`, {
         method: 'POST',
       })
-        .then(response => {
-          if (response.ok) {
-            alert('Calçado excluído com sucesso!');
-            window.location.href = '/ShoesSystem/home';
-          } else {
-            alert('Erro ao excluir o calçado.');
-          }
-        })
-        .catch(error => {
-          console.error('Erro:', error);
-          alert('Ocorreu um erro ao processar a exclusão.');
-        });
+      window.location.href = '/ShoesSystem/home';
     }
   }
 
