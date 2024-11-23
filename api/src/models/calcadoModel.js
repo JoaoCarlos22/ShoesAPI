@@ -52,26 +52,6 @@ const calçadoSchema = mongoose.Schema({
             message: 'Nome inválido! O nome deve conter apenas caracteres alfabéticos.'
         }
     },
-    price: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(value) {
-                return value > 0;
-            },
-            message: 'Preço inválido! O preço deve ser um número positivo.'
-        }
-    },
-    quantity: {
-        type: Number,
-        required: true,
-        validate: {
-            validator: function(value) {
-                return value >= 0;
-            },
-            message: 'Quantidade inválida! A quantidade deve ser um número positivo.'
-        }
-    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categoria',
@@ -83,6 +63,29 @@ const calçadoSchema = mongoose.Schema({
             message: 'O id da categoria é inválido!'
         }
     },
+    supplier: [{
+        id_fornecedor: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Fornecedor',
+            validate: {
+                validator: function(value) {
+                    return mongoose.Types.ObjectId.isValid(value);
+                },
+                message: 'O id do fornecedor é inválido!'
+            }
+        },
+        
+        quantity: {
+            type: Number,
+            required: true,
+            validate: {
+                validator: function(value) {
+                    return value >= 0;
+                },
+                message: 'Quantidade inválida! A quantidade deve ser um número positivo.'
+            }
+        }
+    }]
 })
 
 module.exports = mongoose.model('Calçado', calçadoSchema);
