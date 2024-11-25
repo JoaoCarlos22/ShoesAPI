@@ -7,7 +7,7 @@ const calçadoSchema = mongoose.Schema({
         unique: true,
         validate: {
             validator: function(value) {
-                return /^[A-Za-z\s]+$/.test(value);
+                return /^[A-Za-z\sáéíóúÁÉÍÓ��Çç]+$/.test(value);
             },
             message: 'Nome inválido! O nome deve conter apenas caracteres alfabéticos.'
         }
@@ -37,7 +37,7 @@ const calçadoSchema = mongoose.Schema({
         required: true,
         validate: {
             validator: function(value) {
-                return /^[A-Za-z]+$/.test(value);
+                return /^[A-Za-z\sáéíóúÁÉÍÓ��Çç]+$/.test(value);
             },
             message: 'Cor inválida! A cor deve conter apenas caracteres alfabéticos.'
         }
@@ -47,7 +47,7 @@ const calçadoSchema = mongoose.Schema({
         required: true,
         validate: {
             validator: function(value) {
-                return /^[A-Za-z\s]+$/.test(value);
+                return /^[A-Za-z\sáéíóúÁÉÍÓ��Çç]+$/.test(value);
             },
             message: 'Nome inválido! O nome deve conter apenas caracteres alfabéticos.'
         }
@@ -64,7 +64,7 @@ const calçadoSchema = mongoose.Schema({
         }
     },
     supplier: [{
-        id_fornecedor: {
+        idFornecedor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Fornecedor',
             validate: {
@@ -74,7 +74,6 @@ const calçadoSchema = mongoose.Schema({
                 message: 'O id do fornecedor é inválido!'
             }
         },
-        
         quantity: {
             type: Number,
             required: true,
@@ -84,7 +83,17 @@ const calçadoSchema = mongoose.Schema({
                 },
                 message: 'Quantidade inválida! A quantidade deve ser um número positivo.'
             }
-        }
+        },
+        totalPrice: {
+            type: Number,
+            required: true,
+            validate: {
+                validator: function(value) {
+                    return value >= 0;
+                },
+                message: 'Preço total inválido! O preço total deve ser um número positivo.'
+            }
+        },
     }]
 })
 
