@@ -99,6 +99,7 @@ const fornecedorSchema = mongoose.Schema({
         },
         brand: [{
             name:{
+                type: String,
                 required: true,
                 validate: {
                     validator: function(value) {
