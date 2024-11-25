@@ -2,7 +2,7 @@ const Calçado = require("../models/calcadoModel.js");
 const Categoria = require("../models/categoriaModel.js");
 
 // Lista todos os calçados existentes no banco
-const getCalçados = async (req, res) => {
+exports.getCalçados = async (req, res) => {
     try{
         // busca todos os calçados no banco de dados com find() e retorna um array de calçados e exibe o nome da categoria inves do id
         const calçados = await Calçado.find({})
@@ -20,7 +20,7 @@ const getCalçados = async (req, res) => {
 }
 
 // Busca apenas um calçado
-const getCalçado = async (req, res) => {
+exports.getCalçado = async (req, res) => {
     try{
         // busca o calçado pelo id no banco de dados com findById()
         const calçado = await Calçado.findById(req.params.id).populate('category')
@@ -32,9 +32,8 @@ const getCalçado = async (req, res) => {
 
         // renderiza para rota /calcado:id
         res.render('pages/calcado', {
-            title: 'Calçado',
+            title: `Calçado ${calçado.nome}`,
             style: 'calcado.css',
-            //js: 'btn-delete.js',
             shoe: calçado
         });
     } catch (error) {
@@ -44,7 +43,7 @@ const getCalçado = async (req, res) => {
 } 
 
 // Renderiza a página para cadastro de um novo calçado
-const getCadastroCalçado = async (req, res) => {
+exports.getCadastroCalçado = async (req, res) => {
     res.render('pages/addCalcado', {
         title: 'Novo Calçado',
         style: 'addCalcado.css',
@@ -53,7 +52,7 @@ const getCadastroCalçado = async (req, res) => {
 }
 
 // Registra um novo calçado
-const createCalçado = async (req, res) => {
+exports.createCalçado = async (req, res) => {
     try{
         // captura os dados do req.body
         const newCalçado = new Calçado({
@@ -89,7 +88,7 @@ const createCalçado = async (req, res) => {
 }
 
 // Registra uma categoria
- const createCategory = async (req, res) => {
+exports.createCategory = async (req, res) => {
     try{
         // captura os dados do req.body
         const newCategory = new Categoria(req.body);
@@ -114,7 +113,7 @@ const createCalçado = async (req, res) => {
     }
 }
 
-const getUpdateCalçado = async (req, res) => {
+exports.getUpdateCalçado = async (req, res) => {
     try{
         // busca o calçado pelo id no banco de dados com findById()
         const calçado = await Calçado.findById(req.params.id).populate('category')
@@ -138,7 +137,7 @@ const getUpdateCalçado = async (req, res) => {
 } 
  
 // Atualiza um calçado
-const updateCalçado = async (req, res) => {
+exports.updateCalçado = async (req, res) => {
     try{
         // busca o calçado pelo id no banco de dados com findById()
         const calçado = await Calçado.findById(req.params.id)
@@ -162,7 +161,7 @@ const updateCalçado = async (req, res) => {
 }
 
 // Deleta um calçado
-const deleteCalçado = async (req, res) => {
+exports.deleteCalçado = async (req, res) => {
     try{
         // verifica se o id existe
         if (!req.params.id) {
@@ -178,15 +177,4 @@ const deleteCalçado = async (req, res) => {
         console.error('Erro ao deletar o calçado:', error);
         res.status(500).send(error.message);
     }
-}
-
-module.exports = {
-    getCalçados,
-    getCalçado,
-    getCadastroCalçado,
-    createCalçado,
-    createCategory,
-    getUpdateCalçado,
-    updateCalçado,
-    deleteCalçado
 }
