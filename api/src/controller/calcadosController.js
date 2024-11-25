@@ -31,7 +31,7 @@ exports.getCalçado = async (req, res) => {
         }
 
         // renderiza para rota /calcado:id
-        res.render('pages/calcado', {
+        res.render('pages/calcado/calcado', {
             title: `Calçado ${calçado.nome}`,
             style: 'calcado.css',
             shoe: calçado
@@ -44,7 +44,7 @@ exports.getCalçado = async (req, res) => {
 
 // Renderiza a página para cadastro de um novo calçado
 exports.getCadastroCalçado = async (req, res) => {
-    res.render('pages/addCalcado', {
+    res.render('pages/calcado/addCalcado', {
         title: 'Novo Calçado',
         style: 'addCalcado.css',
         categories: await Categoria.find({})
@@ -113,6 +113,7 @@ exports.createCategory = async (req, res) => {
     }
 }
 
+// Renderiza a página para atualizar um calçado
 exports.getUpdateCalçado = async (req, res) => {
     try{
         // busca o calçado pelo id no banco de dados com findById()
@@ -124,7 +125,7 @@ exports.getUpdateCalçado = async (req, res) => {
         }
 
         // renderiza para rota /calcado:id
-        res.render('pages/updCalcado', {
+        res.render('pages/calcado/updCalcado', {
             title: 'Atualizar calçado',
             style: 'updCalcado.css',
             //js: 'btn-delete.js',
