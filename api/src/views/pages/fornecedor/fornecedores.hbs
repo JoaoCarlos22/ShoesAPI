@@ -1,0 +1,35 @@
+<div class="container-add-recent">
+      <h2>Lista de Fornecedores</h2>
+      <ul class="fields">
+        {{#each suppliers}}
+          <li data-id="{{this._id}}">
+              <label>{{this.name}}</label>
+              <label>{{this.cnpj}}</label>
+              <label>{{this.email}}</label>
+              <label>{{this.address.city}}, {{this.address.state}}, {{this.country}}</label>
+            </li>
+        {{/each}}
+      </ul>
+</div>
+
+<section class="footer">
+  <p>Aqui você pode adicionar o Fornecedor:</p>
+  <button class="btn-adicionar" onclick="window.location.href='/ShoesSystem/addFornecedor'">Adicionar Fornecedor</button>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const shoeItems = document.querySelectorAll(".fields li");
+  
+    shoeItems.forEach(item => {
+      item.addEventListener("click", () => {
+        const shoeId = item.getAttribute("data-id");
+        if (shoeId) {
+          window.location.href = `/ShoesSystem/fornecedor/${shoeId}`;
+        } else {
+          console.error("ID do calçado não encontrado.");
+        }
+      });
+    });
+  });
+</script>

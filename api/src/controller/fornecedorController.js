@@ -1,10 +1,11 @@
 const Fornecedor = require('../models/fornecedorModel');
+const Categoria = require('../models/categoriaModel');
 
 // Rota para renderizar a página de todos os fornecedores existentes
 exports.getFornecedores = async (req, res) => {
     try {
         // Busca todos os fornecedores no banco de dados
-        const fornecedores = await Fornecedor.find({});
+        const fornecedores = await Fornecedor.find({}).populate('address');
 
         // verifica se existe algum fornecedor no banco de dados
         if (!fornecedores.length) {
@@ -12,7 +13,7 @@ exports.getFornecedores = async (req, res) => {
         }
 
         // Renderiza a página com a lista de fornecedores
-        res.render('pages/forncedor/fornecedores', {
+        res.render('pages/fornecedor/fornecedores', {
             title: 'Fornecedores',
             style: 'fornecedores.css',
             suppliers: fornecedores,
@@ -27,7 +28,7 @@ exports.getFornecedores = async (req, res) => {
 exports.getFornecedor = async (req, res) => {
     try {
         // Busca o fornecedor pelo ID
-        const fornecedor = await Fornecedor.findById(req.params.id);
+        const fornecedor = await Fornecedor.findById(req.params.id).populate('catalog.category');
 
         // Verifica se o fornecedor existe
         if (!fornecedor) {
@@ -36,9 +37,10 @@ exports.getFornecedor = async (req, res) => {
 
         // Renderiza a página com os dados do fornecedor
         res.render('pages/fornecedor/fornecedor', {
-            title: `Fornecedor: ${fornecedor.nome}`,
+            title: `Fornecedor: ${fornecedor.name}`,
             style: 'fornecedor.css',
             supplier: fornecedor,
+            categories: await Categoria.find({})
         });
     } catch (error) {
         console.error('Erro ao buscar o fornecedor:', error);

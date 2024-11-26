@@ -13,7 +13,6 @@ const fornecedorSchema = mongoose.Schema({
     },
     cnpj:{
         type: String,
-        unique: true,
         required: true,
         validate: {
             validator: function(value) {
@@ -102,4 +101,4 @@ const fornecedorSchema = mongoose.Schema({
     }]
 })
 
-module.exports = mongoose.model('Fornecedor', fornecedorSchema);
+module.exports = mongoose.model('Fornecedore', fornecedorSchema);

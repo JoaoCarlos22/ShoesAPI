@@ -1,0 +1,78 @@
+
+
+.container-add-recent {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+.container-add-recent h2 {
+    
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #333;
+}
+  
+.fields {
+    list-style: none;
+    padding: 0;
+}
+  
+.fields li {
+    margin: 10px 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+  
+.fields li:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.fields li label {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+    cursor: pointer;
+}
+  
+.fields li label:first-child {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.btn-adicionar {
+    background-color: #dad4ce; /* Cor de fundo */
+    color: #000000; /* Cor do texto */
+    border: 1px solid #dad4ce; /* Borda */
+    border-radius: 4px;
+    padding: 10px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn-adicionar:hover {
+    background-color: #9c49b3; /* Cor ao passar o mouse */
+  }
+
+  .footer {
+    background-color: #f0f0f0; /* Cor de fundo levemente contrastante */
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 20px auto; /* Centraliza a seção e adiciona margens */
+  }
