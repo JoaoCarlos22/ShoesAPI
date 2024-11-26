@@ -17,10 +17,11 @@ const fornecedorSchema = mongoose.Schema({
         required: true,
         validate: {
             validator: function(value) {
-                return /^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$/.test(value);
+                return /^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\/[0-9]{4}-[0-9]{2}$/.test(value);
             },
-            message: 'CNPJ inválido! O CNPJ deve estar no formato XXX.XXX.XXX-XX.'
+            message: 'CNPJ inválido! O CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX.'
         }
+        
     },
     email: {
         type: String,
@@ -32,28 +33,7 @@ const fornecedorSchema = mongoose.Schema({
             message: 'Email inválido! O email deve estar no formato nome@domínio.com.'
         }
     },
-    addres: {
-        street: {
-            type: String,
-            required: true,
-            validate: {
-                validator: function(value) {
-                    return /^[A-Za-z\sáéíóúÁÉÍÓ��Çç]+$/.test(value);
-                },
-                message: 'Logradouro inválido! O logradouro deve conter apenas caracteres alfabéticos.'
-            }
-        },
-        number: {
-            type: Number,
-            unique: true,
-            required: true,
-            validate: {
-                validator: function(value) {
-                    return value > 0;
-                },
-                message: 'Número inválido! O número da casa deve ser um número positivo.'
-            }
-        },
+    address: {
         city: {
             type: String,
             required: true,

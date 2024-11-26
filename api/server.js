@@ -35,7 +35,7 @@ connectDB()
     console.log('\n >> Banco de dados conectado com sucesso!')
     app.listen(8000, () => {
         console.log(' >> Servidor rodando na porta 8000:')
-        console.log(` >> http://localhost:8000/ShoesSystem/home`);
+        console.log(` >> http://localhost:8000/ShoesSystem/home \n`);
     }).on('error', err =>
         console.log('Erro ao ligar o servidor:\n', err))
 })

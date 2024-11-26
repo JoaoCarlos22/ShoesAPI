@@ -12,7 +12,7 @@ exports.getFornecedores = async (req, res) => {
         }
 
         // Renderiza a página com a lista de fornecedores
-        res.render('pages/fornecedores', {
+        res.render('pages/forncedor/fornecedores', {
             title: 'Fornecedores',
             style: 'fornecedores.css',
             suppliers: fornecedores,
@@ -35,7 +35,7 @@ exports.getFornecedor = async (req, res) => {
         }
 
         // Renderiza a página com os dados do fornecedor
-        res.render('pages/fornecedor', {
+        res.render('pages/fornecedor/fornecedor', {
             title: `Fornecedor: ${fornecedor.nome}`,
             style: 'fornecedor.css',
             supplier: fornecedor,
@@ -59,10 +59,11 @@ exports.createFornecedor = async (req, res) => {
     try {
         // Cria um novo fornecedor com os dados recebidos
         const fornecedor = new Fornecedor({
-            nome: req.body.nome,
+            name: req.body.name,
             cnpj: req.body.cnpj,
-            endereco: req.body.endereco,
-            telefone: req.body.telefone,
+            email: req.body.email,
+            address: req.body.address,
+            catalog: req.body.catalog
         });
 
         // verifica se há alguma duplicata pelo cnpj
@@ -117,10 +118,9 @@ exports.updateFornecedor = async (req, res) => {
         }
 
         // Atualiza os dados do fornecedor
-        fornecedor.nome = req.body.nome;
+        fornecedor.name = req.body.name;
         fornecedor.cnpj = req.body.cnpj;
-        fornecedor.endereco = req.body.endereco;
-        fornecedor.telefone = req.body.telefone;
+        fornecedor.address = req.body.address;
 
         // Salva os dados do fornecedor
         await fornecedor.save();
