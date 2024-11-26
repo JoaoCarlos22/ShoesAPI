@@ -39,14 +39,14 @@
 /* Estilo para cada card (produto) */
 .card {
   flex: 0 0 25%; /* Garante que cada card ocupe 25% da largura total */
-  min-width: 200px; /* Define a largura mínima para cada card */
+  min-width: 300px; /* Define a largura mínima para cada card */
   padding: 5px; /* Adiciona espaço interno ao redor do conteúdo do card */
   text-align: center; /* Centraliza o conteúdo dentro do card */
 }
 
 /* Estilo para as imagens dentro dos cards */
 .card img {
-  width: 65%; /* Faz com que a imagem ocupe toda a largura do card */
+  width: 80; /* Faz com que a imagem ocupe toda a largura do card */
   height: 250px; /* Define a altura da imagem */
   object-fit: cover; /* Escala a imagem para preencher todo o container, mantendo as proporções */
 }
