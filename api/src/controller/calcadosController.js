@@ -32,7 +32,7 @@ exports.getCalçado = async (req, res) => {
 
         // renderiza para rota /calcado:id
         res.render('pages/calcado/calcado', {
-            title: `Calçado ${calçado.nome}`,
+            title: `Calçado ${calçado.name}`,
             style: 'calcado.css',
             shoe: calçado
         });
