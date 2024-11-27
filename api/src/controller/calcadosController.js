@@ -1,5 +1,6 @@
 const Calçado = require("../models/calcadoModel.js");
 const Categoria = require("../models/categoriaModel.js");
+const Fornecedor = require("../models/fornecedorModel.js");
 
 // Lista todos os calçados existentes no banco
 exports.getCalçados = async (req, res) => {
@@ -21,20 +22,22 @@ exports.getCalçados = async (req, res) => {
 
 // Busca apenas um calçado
 exports.getCalçado = async (req, res) => {
-    try{
-        // busca o calçado pelo id no banco de dados com findById()
-        const calçado = await Calçado.findById(req.params.id).populate('category')
-        
-        // verifica se o calçado existe
-        if (!calçado) {
+    try {
+        // Busca o calçado pelo ID e popula as informações de categoria e fornecedor
+        const calcado = await Calçado.findById(req.params.id)
+            .populate('category') // Popula a categoria
+           // .populate('supplier'); // Popula o fornecedor
+
+        // Verifica se o calçado existe
+        if (!calcado) {
             return res.status(404).send('Calçado não encontrado!');
         }
 
-        // renderiza para rota /calcado:id
+        // Renderiza a página /calcado/:id com os dados necessários
         res.render('pages/calcado/calcado', {
-            title: `Calçado ${calçado.name}`,
+            title: `Calçado ${calcado.name}`,
             style: 'calcado.css',
-            shoe: calçado
+            shoe: calcado,
         });
     } catch (error) {
         console.error('Erro ao buscar o calçado:', error);
@@ -44,44 +47,38 @@ exports.getCalçado = async (req, res) => {
 
 // Renderiza a página para cadastro de um novo calçado
 exports.getCadastroCalçado = async (req, res) => {
+    // busca todos os fornecedores existentes
+    const fornecedores = await Fornecedor.find({});
+    
+    // renderiza a página com os dados do novo calçado e com as categorias e fornecedores
     res.render('pages/calcado/addCalcado', {
         title: 'Novo Calçado',
         style: 'addCalcado.css',
-        categories: await Categoria.find({})
+        categories: await Categoria.find({}),
+        supplies: fornecedores
     })
 }
 
-// Registra um novo calçado
 exports.createCalçado = async (req, res) => {
-    try{
-        // captura os dados do req.body
+    try {
+        const suppliers = req.body.suppliers || []; // Captura os fornecedores passados
+        const quantity = req.body.quantity; // Captura a quantidade
+
         const newCalçado = new Calçado({
             name: req.body.name,
             gender: req.body.gender,
-            brand: req.body.brand,
             size: req.body.size,
             color: req.body.color,
-            price: req.body.price,
-            category: req.body.category,  // id da categoria
-            quantity: req.body.quantity
+            brand: req.body.brand,
+            category: req.body.category,
+            supplier: suppliers, // Fornecedores
+            quantity: quantity,
+            totalPrice: req.body.price, // Preço total calculado
         });
-        
-        // verifica se o id da categoria existe
-        const categoryExiste = await Categoria.findById(req.body.category);
-        if (!categoryExiste) {
-            return res.status(404).send('Categoria não encontrada!');
-        }    
-        
-        // verifica se há alguma duplicata pelo nome
-        const calçadoExiste = await Calçado.findOne({ name: newCalçado.name });
-        if (calçadoExiste) {
-            return res.status(409).send('Calçado já existe!');
-        }
-        
-        // cadastra o calçado e volta para a Home
+
         await newCalçado.save();
         res.redirect('/ShoesSystem/home');
-    }catch(error){
+    } catch (error) {
         console.error('Erro ao registrar calçado:', error);
         res.status(500).send(error.message);
     }
@@ -149,7 +146,7 @@ exports.updateCalçado = async (req, res) => {
         }  
         
         // atualiza os dados do calçado (quantidade e/ou preço)
-        calçado.price = req.body.price;
+        calçado.totalPrice = req.body.price;
         calçado.quantity = req.body.quantity;
         
         // salva os dados do calçado e volta para a Home

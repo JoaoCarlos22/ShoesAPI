@@ -153,3 +153,47 @@ exports.deleteFornecedor = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+// Endpoint para buscar o preço do calçado com base no fornecedor, categoria e marca
+exports.getPrice = async (req, res) => {
+    try {
+        const { supplier, category, brand } = req.query;
+
+        console.log("Parâmetros recebidos:", { supplier, category, brand });
+
+        // Verifica se todos os parâmetros foram fornecidos
+        if (!supplier || !category || !brand) {
+            return res.status(400).json({ message: "Parâmetros inválidos" });
+        }
+
+        // Busca o fornecedor no banco de dados
+        const fornecedor = await Fornecedor.findById(supplier).populate("catalog.category");
+
+        if (!fornecedor) {
+            return res.status(404).json({ message: "Fornecedor não encontrado" });
+        }
+
+        // Procura a categoria correspondente no catálogo do fornecedor
+        const catalogItem = fornecedor.catalog.find(
+            (item) => item.category._id.toString() === category
+        );
+
+        if (!catalogItem) {
+            return res.status(404).json({ message: "Categoria não encontrada no catálogo do fornecedor" });
+        }
+
+        // Procura a marca dentro da categoria
+        const brandItem = catalogItem.brand.find((item) => item.name === brand);
+
+        if (!brandItem) {
+            return res.status(404).json({ message: "Marca não encontrada na categoria" });
+        }
+
+        // Retorna o preço
+        res.json({ price: brandItem.price });
+    } catch (error) {
+        console.error("Erro ao buscar preço:", error);
+        res.status(500).json({ message: "Erro ao buscar preço" });
+    }
+};
+

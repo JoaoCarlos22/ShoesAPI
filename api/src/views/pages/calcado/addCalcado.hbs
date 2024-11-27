@@ -13,6 +13,23 @@
                 </select>  
             </section>
             <section>
+                <h2>Cor:</h2>
+                <input type="text" id="color" name="color" placeholder="Digite a cor do calçado" required>
+            </section>
+            <section>
+                <h2>Tamanho:</h2>
+                <input type="text" id="size" name="size" placeholder="Digite o tamanho do calçado" required>
+            </section>
+            <section>
+                <h2>Fornecedores:</h2>
+                <select name="suppliers[]" id="supplier" multiple required>
+                    {{#each supplies}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+                <small>Segure CTRL (ou Command) para selecionar mais de um fornecedor</small>
+            </section>
+            <section>
                 <h2>Categoria:</h2>
                 <select name="category" id="category" required>
                     <option value="">Selecione uma categoria</option>
@@ -24,36 +41,87 @@
             <section>
                 <h2>Marca:</h2>
                 <select name="brand" id="brand" required>
-                    <option value="">Selecione uma categoria</option>
-                    <option value="Sapatinho de luxo">Sapatinho de Luxo</option>
+                    <option value="">Selecione uma marca</option>
+                    <option value="Sapatinho de Luxo">Sapatinho de Luxo</option>
                     <option value="Vizzano">Vizzano</option>
                     <option value="Olympikus">Olympikus</option>
                     <option value="Rider">Rider</option>
                 </select>
             </section>
             <section>
-                <h2>Cor:</h2>
-                <input type="text" id="color" name="color" placeholder="Digite a cor do calçado" required>
-            </section>
-            <section>
-                <h2>Tamanho:</h2>
-                <input type="text" id="size" name="size" placeholder="Digite o tamanho do calçado" required>
-            </section>
-            <section>
                 <h2>Preço:</h2>
-                <input type="text" id="price" name="price" placeholder="Digite o preço" required>
-            </section>
+                <input type="text" id="price" name="price" placeholder="Preço será calculado automaticamente" readonly required>
+            </section>  
             <section>
                 <h2>Quantidade:</h2>
-                <input type="number" id="quantity" name="quantity" placeholder="Digite a quantidade" required>
+                <input type="number" id="quantity" name="quantity" min="1" placeholder="Digite a quantidade" required>
             </section>                  
             <section>
                 <div class="actions">
                     <button type="submit" class="btn btn-submit">Adicionar</button>    
-
                     <button class="btn btn-back" onclick="window.location.href='/ShoesSystem/home'">Voltar</button>
                 </div>
             </section>
         </form>  
     </main>
 </div>
+
+<script>
+    // Elementos
+    const supplierSelect = document.getElementById("supplier");
+    const categorySelect = document.getElementById("category");
+    const brandSelect = document.getElementById("brand");
+    const quantityInput = document.getElementById("quantity");
+    const priceInput = document.getElementById("price");
+
+    let unitPrice = 0; // Preço unitário inicial
+
+    // Simula a obtenção do preço unitário com base nos fornecedores, categoria e marca
+    async function fetchUnitPrice() {
+        const suppliers = Array.from(supplierSelect.selectedOptions).map(option => option.value);
+        const category = categorySelect.value;
+        const brand = brandSelect.value;
+
+        if (!suppliers.length || !category || !brand) {
+            priceInput.value = "Selecione todos os campos";
+            unitPrice = 0;
+            return;
+        }
+
+        try {
+            // Simulação de um fetch para calcular o preço unitário
+            const response = await fetch(
+                `/ShoesSystem/getPrice?suppliers=${suppliers.join(",")}&category=${category}&brand=${brand}`
+            );
+            if (response.ok) {
+                const data = await response.json();
+                unitPrice = parseFloat(data.unitPrice); // Define o preço unitário
+                updateTotalPrice();
+            } else {
+                priceInput.value = "Erro ao calcular o preço";
+                console.error("Erro ao buscar preço:", await response.text());
+            }
+        } catch (error) {
+            priceInput.value = "Erro de conexão";
+            console.error("Erro:", error);
+        }
+    }
+
+    // Atualiza o preço total
+    function updateTotalPrice() {
+        const quantity = parseInt(quantityInput.value) || 0;
+
+        if (quantity > 0 && unitPrice > 0) {
+            const totalPrice = (unitPrice * quantity).toFixed(2);
+            priceInput.value = `R$ ${totalPrice}`;
+        } else {
+            priceInput.value = "Digite uma quantidade válida";
+        }
+    }
+
+    // Eventos
+    supplierSelect.addEventListener("change", fetchUnitPrice);
+    categorySelect.addEventListener("change", fetchUnitPrice);
+    brandSelect.addEventListener("change", fetchUnitPrice);
+    quantityInput.addEventListener("input", updateTotalPrice);
+</script>
