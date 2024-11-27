@@ -155,45 +155,59 @@ exports.deleteFornecedor = async (req, res) => {
 };
 
 // Endpoint para buscar o preço do calçado com base no fornecedor, categoria e marca
-exports.getPrice = async (req, res) => {
+exports.getPrices = async (req, res) => {
     try {
-        const { supplier, category, brand } = req.query;
+        const { category, brand } = req.query;
 
-        console.log("Parâmetros recebidos:", { supplier, category, brand });
+        console.log("Parâmetros recebidos:", { category, brand });
 
-        // Verifica se todos os parâmetros foram fornecidos
-        if (!supplier || !category || !brand) {
-            return res.status(400).json({ message: "Parâmetros inválidos" });
+        // Validação de parâmetros
+        if (!category || !brand) {
+            return res.status(400).json({ message: "Parâmetros inválidos. Certifique-se de fornecer a categoria e a marca." });
         }
 
-        // Busca o fornecedor no banco de dados
-        const fornecedor = await Fornecedor.findById(supplier).populate("catalog.category");
+        // Busca todos os fornecedores que possuem a categoria no catálogo
+        const fornecedores = await Fornecedor.find({
+            "catalog.category": category, // Filtra fornecedores com a categoria no catálogo
+            "catalog.brand.name": brand  // Filtra fornecedores com a marca no catálogo
+        }).populate("catalog.category"); // Popula a referência da categoria para ter mais informações, se necessário
 
-        if (!fornecedor) {
-            return res.status(404).json({ message: "Fornecedor não encontrado" });
+        if (!fornecedores.length) {
+            return res.status(404).json({ message: "Nenhum fornecedor encontrado para a categoria e marca especificadas." });
         }
 
-        // Procura a categoria correspondente no catálogo do fornecedor
-        const catalogItem = fornecedor.catalog.find(
-            (item) => item.category._id.toString() === category
-        );
+        // Monta o objeto com preços de cada fornecedor
+        const prices = fornecedores.map((fornecedor) => {
+            const catalogItem = fornecedor.catalog.find(
+                (item) => item.category._id.toString() === category // Procura o item correspondente na categoria
+            );
 
-        if (!catalogItem) {
-            return res.status(404).json({ message: "Categoria não encontrada no catálogo do fornecedor" });
+            if (catalogItem) {
+                const brandItem = catalogItem.brand.find(
+                    (item) => item.name.toLowerCase() === brand.toLowerCase() // Procura a marca correspondente
+                );
+
+                if (brandItem) {
+                    return {
+                        supplierId: fornecedor._id,
+                        supplierName: fornecedor.name,
+                        price: brandItem.price,
+                    };
+                }
+            }
+            return null; // Ignora caso não encontre um preço válido
+        }).filter(item => item !== null); // Remove itens nulos do resultado
+
+        console.log('Prices: ', prices)
+
+        if (!prices.length) {
+            return res.status(404).json({ message: "Nenhuma correspondência encontrada para a categoria e marca especificadas." });
         }
 
-        // Procura a marca dentro da categoria
-        const brandItem = catalogItem.brand.find((item) => item.name === brand);
-
-        if (!brandItem) {
-            return res.status(404).json({ message: "Marca não encontrada na categoria" });
-        }
-
-        // Retorna o preço
-        res.json({ price: brandItem.price });
+        // Retorna os preços encontrados
+        res.json(prices);
     } catch (error) {
-        console.error("Erro ao buscar preço:", error);
-        res.status(500).json({ message: "Erro ao buscar preço" });
+        console.error("Erro ao buscar preços:", error);
+        res.status(500).json({ message: "Erro interno ao buscar preços." });
     }
 };
-

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getCalçado, getCadastroCalçado, getCalçados, getUpdateCalçado, createCalçado, createCategory, updateCalçado, deleteCalçado} = require("../controller/calcadosController.js");
-const { getCadastroFornecedor, getFornecedor, createFornecedor, getUpdateFornecedor, updateFornecedor, deleteFornecedor, getFornecedores, getPrice} = require('../controller/fornecedorController.js')
+const { getCadastroFornecedor, getFornecedor, createFornecedor, getUpdateFornecedor, updateFornecedor, deleteFornecedor, getFornecedores, getPrices} = require('../controller/fornecedorController.js')
 
 // rotas para cada controle
 router.get('/home', getCalçados);
@@ -21,6 +21,6 @@ router.post('/delFornecedor', deleteFornecedor);
 
 router.post('/addCategoria', createCategory);
 // Rota para buscar o preço
-router.get("/getPrice", getPrice);
+router.get("/getPrices", getPrices);
 
 module.exports = router;

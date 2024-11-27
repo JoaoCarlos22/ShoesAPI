@@ -47,15 +47,13 @@ exports.getCalçado = async (req, res) => {
 
 // Renderiza a página para cadastro de um novo calçado
 exports.getCadastroCalçado = async (req, res) => {
-    // busca todos os fornecedores existentes
-    const fornecedores = await Fornecedor.find({});
     
     // renderiza a página com os dados do novo calçado e com as categorias e fornecedores
     res.render('pages/calcado/addCalcado', {
-        title: 'Novo Calçado',
+        title: 'Adicionar Calçado',
         style: 'addCalcado.css',
         categories: await Categoria.find({}),
-        supplies: fornecedores
+        suppliers: await Fornecedor.find({})
     })
 }
 

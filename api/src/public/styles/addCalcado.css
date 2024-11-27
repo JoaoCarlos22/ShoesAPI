@@ -1,4 +1,4 @@
-/* Conainer principal */
+/* Contêiner principal */
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -7,6 +7,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
+
 /* Seções */
 main {
     padding: 20px;
@@ -30,7 +31,8 @@ section h2 {
 
 form select,
 form input {
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     padding: 10px;
     border: 1px solid #757575;
     border-radius: 5px;
@@ -44,8 +46,43 @@ form select:focus {
     border-color: #000000;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
+.supplier-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+    cursor: pointer;
 
-.actions{
+}
+
+.supplier-cards .card {
+    border: 1px solid #bdbdbd;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 15px;
+    flex: 1 1 calc(33.333% - 10px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.supplier-cards .card:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(82, 82, 82, 0.657);
+}
+
+.card.selected {
+    border: 2px solid #8e15af; /* Azul para indicar seleção */
+    background-color: #f0f8ff; /* Azul claro para contraste */
+    box-shadow: 0 0 10px #A68DAD; /* Realce */
+    transition: all 0.3s ease; /* Suavidade na transição */
+}
+.supplier-cards .card input[type="checkbox"] {
+    display: none;
+}
+
+.actions {
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -53,44 +90,57 @@ form select:focus {
 
 /* Estilo base para os botões */
 .actions .btn {
-    border: 1px solid #dc3545; /* Borda vermelha */
-    background-color: transparent; /* Fundo transparente */
-    color: #dc3545; /* Cor do texto vermelha */
+    border: 1px solid #dc3545;
+    /* Borda vermelha */
+    background-color: transparent;
+    /* Fundo transparente */
+    color: #dc3545;
+    /* Cor do texto vermelha */
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 14px;
-    transition: all 0.3s ease; /* Animação suave */
+    transition: all 0.3s ease;
+    /* Animação suave */
     cursor: pointer;
 }
 
 /* Estilo ao passar o mouse */
 .actions .btn:hover {
-    background-color: #dc3545; /* Fundo vermelho */
-    color: #fff; /* Texto branco */
-    border-color: #dc3545; /* Mesma cor da borda */
+    background-color: #dc3545;
+    /* Fundo vermelho */
+    color: #fff;
+    /* Texto branco */
+    border-color: #dc3545;
+    /* Mesma cor da borda */
 }
 
 /* Específico para o botão de editar */
 .actions .btn-submit {
-    border-color: #198754; /* Azul padrão para editar */
+    border-color: #198754;
+    /* Verde padrão para adicionar */
     color: #198754;
 }
 
 .actions .btn-submit:hover {
-    background-color: #198754; /* Fundo azul no hover */
-    color: #fff; /* Texto branco */
+    background-color: #198754;
+    /* Fundo verde no hover */
+    color: #fff;
+    /* Texto branco */
     border-color: #198754;
 }
 
 /* Botão de voltar */
 .actions .btn-back {
-    border-color: #6c757d; /* Cinza padrão */
+    border-color: #6c757d;
+    /* Cinza padrão */
     color: #6c757d;
 }
 
 .actions .btn-back:hover {
-    background-color: #6c757d; /* Fundo cinza */
-    color: #fff; /* Texto branco */
+    background-color: #6c757d;
+    /* Fundo cinza */
+    color: #fff;
+    /* Texto branco */
     border-color: #6c757d;
 }
 

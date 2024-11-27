@@ -8,6 +8,7 @@
             <section>
                 <h2>Gênero:</h2>
                 <select name="gender" id="gender" required>
+                    <option value="">Selecione um gênero</option>
                     <option value="Feminino">Feminino</option>
                     <option value="Masculino">Masculino</option>
                 </select>  
@@ -19,15 +20,6 @@
             <section>
                 <h2>Tamanho:</h2>
                 <input type="text" id="size" name="size" placeholder="Digite o tamanho do calçado" required>
-            </section>
-            <section>
-                <h2>Fornecedores:</h2>
-                <select name="suppliers[]" id="supplier" multiple required>
-                    {{#each supplies}}
-                    <option value="{{this._id}}">{{this.name}}</option>
-                    {{/each}}
-                </select>
-                <small>Segure CTRL (ou Command) para selecionar mais de um fornecedor</small>
             </section>
             <section>
                 <h2>Categoria:</h2>
@@ -49,7 +41,22 @@
                 </select>
             </section>
             <section>
-                <h2>Preço:</h2>
+                <h2>Fornecedores:</h2>
+                <div class="supplier-cards" id="supplier-cards">
+                    {{#each suppliers}}
+                    <div class="card" data-id="{{this._id}}">
+                        <input type="checkbox" id="supplier-{{this._id}}" name="suppliers[]" value="{{this._id}}">
+                        <label for="supplier-{{this._id}}">
+                            <h3>{{this.name}}</h3>
+                            <p class="unit-price">Preço Unitário: R$ --</p>
+                        </label>
+                    </div>
+                    {{/each}}
+                </div>
+                <small>Selecione um ou mais fornecedores</small>
+            </section>
+            <section>
+                <h2>Preço total:</h2>
                 <input type="text" id="price" name="price" placeholder="Preço será calculado automaticamente" readonly required>
             </section>  
             <section>
@@ -58,7 +65,8 @@
             </section>                  
             <section>
                 <div class="actions">
-                    <button type="submit" class="btn btn-submit">Adicionar</button>    
+                    <button type="submit" class="btn btn-submit">Adicionar</button>
+                    <button type="button" class="btn btn-clear" id="clear-form">Limpar</button>
                     <button class="btn btn-back" onclick="window.location.href='/ShoesSystem/home'">Voltar</button>
                 </div>
             </section>
@@ -67,61 +75,137 @@
 </div>
 
 <script>
-    // Elementos
-    const supplierSelect = document.getElementById("supplier");
-    const categorySelect = document.getElementById("category");
-    const brandSelect = document.getElementById("brand");
-    const quantityInput = document.getElementById("quantity");
-    const priceInput = document.getElementById("price");
+const categorySelect = document.getElementById("category");
+const brandSelect = document.getElementById("brand");
+const supplierCards = document.getElementById("supplier-cards");
+const priceInput = document.getElementById("price");
+const quantityInput = document.getElementById("quantity");
 
-    let unitPrice = 0; // Preço unitário inicial
+// Variável para armazenar preços dos fornecedores globalmente
+let supplierPrices = [];
 
-    // Simula a obtenção do preço unitário com base nos fornecedores, categoria e marca
-    async function fetchUnitPrice() {
-        const suppliers = Array.from(supplierSelect.selectedOptions).map(option => option.value);
-        const category = categorySelect.value;
-        const brand = brandSelect.value;
+// Função para buscar preços atualizados
+async function fetchPrices() {
+    const category = categorySelect.value;
+    const brand = brandSelect.value;
 
-        if (!suppliers.length || !category || !brand) {
-            priceInput.value = "Selecione todos os campos";
-            unitPrice = 0;
-            return;
-        }
-
-        try {
-            // Simulação de um fetch para calcular o preço unitário
-            const response = await fetch(
-                `/ShoesSystem/getPrice?suppliers=${suppliers.join(",")}&category=${category}&brand=${brand}`
-            );
-            if (response.ok) {
-                const data = await response.json();
-                unitPrice = parseFloat(data.unitPrice); // Define o preço unitário
-                updateTotalPrice();
-            } else {
-                priceInput.value = "Erro ao calcular o preço";
-                console.error("Erro ao buscar preço:", await response.text());
-            }
-        } catch (error) {
-            priceInput.value = "Erro de conexão";
-            console.error("Erro:", error);
-        }
+    if (!category || !brand) {
+        updateSupplierPrices([]);
+        return [];
     }
 
-    // Atualiza o preço total
-    function updateTotalPrice() {
-        const quantity = parseInt(quantityInput.value) || 0;
-
-        if (quantity > 0 && unitPrice > 0) {
-            const totalPrice = (unitPrice * quantity).toFixed(2);
-            priceInput.value = `R$ ${totalPrice}`;
+    try {
+        const response = await fetch(`/ShoesSystem/getPrices?category=${category}&brand=${brand}`);
+        if (response.ok) {
+            const suppliers = await response.json(); // Recebe o array de objetos com os preços
+            return suppliers;
         } else {
-            priceInput.value = "Digite uma quantidade válida";
+            console.error("Erro ao buscar preços:", await response.text());
+            return [];
         }
+    } catch (error) {
+        console.error("Erro ao buscar preços:", error);
+        return [];
     }
+}
 
-    // Eventos
-    supplierSelect.addEventListener("change", fetchUnitPrice);
-    categorySelect.addEventListener("change", fetchUnitPrice);
-    brandSelect.addEventListener("change", fetchUnitPrice);
-    quantityInput.addEventListener("input", updateTotalPrice);
+// Função para buscar preços e atualizar cards
+async function fetchUpdatedPrices() {
+    try {
+        supplierPrices = await fetchPrices();
+        updateSupplierPrices(supplierPrices);
+    } catch (error) {
+        console.error("Erro ao atualizar preços:", error);
+    }
+}
+
+// Função para atualizar os preços nos cards
+function updateSupplierPrices(suppliers) {
+    const cards = supplierCards.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const supplierId = card.dataset.id;
+        const priceElement = card.querySelector(".unit-price");
+
+        const supplierData = suppliers.find(supplier => supplier.supplierId === supplierId);
+
+        if (supplierData) {
+            priceElement.textContent = `Preço Unitário: R$ ${supplierData.price.toFixed(2)}`;
+        } else {
+            priceElement.textContent = "Preço Unitário: R$ --";
+        }
+    });
+
+    // Reseta os campos apenas se não houver fornecedores selecionados
+    const selectedSuppliers = supplierCards.querySelectorAll(".card input[type='checkbox']:checked");
+    if (selectedSuppliers.length === 0) {
+        priceInput.value = "";
+        quantityInput.value = "";
+    }
+}
+
+// Função para atualizar o preço total e a quantidade
+function updateTotalPriceAndQuantity() {
+    const selectedSuppliers = supplierCards.querySelectorAll(".card input[type='checkbox']:checked");
+
+    let totalPrice = 0;
+    let quantity = selectedSuppliers.length;
+
+    selectedSuppliers.forEach(checkbox => {
+        const supplierId = checkbox.value;
+        const supplierData = supplierPrices.find(supplier => supplier.supplierId === supplierId);
+        if (supplierData) {
+            totalPrice += supplierData.price;
+        }
+    });
+
+    priceInput.value = totalPrice.toFixed(2);
+    quantityInput.value = Math.max(1, quantity); // Garante quantidade mínima de 1
+    quantityInput.min = quantity; // Define o mínimo como o número de fornecedores selecionados
+}
+
+// Atualiza o preço automaticamente ao alterar a quantidade
+quantityInput.addEventListener("input", () => {
+    const selectedSuppliers = supplierCards.querySelectorAll(".card input[type='checkbox']:checked");
+    const quantity = parseInt(quantityInput.value, 10);
+
+    if (!isNaN(quantity) && quantity > 0) {
+        let totalPrice = 0;
+
+        selectedSuppliers.forEach(checkbox => {
+            const supplierId = checkbox.value;
+            const supplierData = supplierPrices.find(supplier => supplier.supplierId === supplierId);
+            if (supplierData) {
+                totalPrice += supplierData.price;
+            }
+        });
+
+        priceInput.value = (totalPrice * quantity).toFixed(2);
+    }
+});
+
+// Função para destacar os fornecedores escolhidos
+function highlightSelectedSuppliers() {
+    const cards = supplierCards.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const checkbox = card.querySelector("input[type='checkbox']");
+        // Alterna a classe 'selected' com base no estado do checkbox
+        if (checkbox.checked) {
+            card.classList.add("selected");
+        } else {
+            card.classList.remove("selected");
+        }
+    });
+}
+
+// Eventos para atualizar os preços ao mudar categoria ou marca
+categorySelect.addEventListener("change", fetchUpdatedPrices);
+brandSelect.addEventListener("change", fetchUpdatedPrices);
+// Eventos para atualizar o preço total e a quantidade ao selecionar fornecedores
+supplierCards.addEventListener("change", updateTotalPriceAndQuantity);
+
+// Eventos para atualizar o card de fornecedores
+supplierCards.addEventListener("change", highlightSelectedSuppliers);
 </script>
+
