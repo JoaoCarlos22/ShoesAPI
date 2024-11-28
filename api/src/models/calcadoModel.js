@@ -42,16 +42,6 @@ const calçadoSchema = mongoose.Schema({
             message: 'Cor inválida! A cor deve conter apenas caracteres alfabéticos.'
         }
     },
-    brand: {
-        type: String,
-        required: true,
-        validate: {
-            validator: function(value) {
-                return /^[A-Za-z\sáéíóúÁÉÍÓÇç]+$/.test(value);
-            },
-            message: 'Marca inválida! A marca deve conter apenas caracteres alfabéticos.'
-        }
-    },
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Categoria',
@@ -63,18 +53,51 @@ const calçadoSchema = mongoose.Schema({
             message: 'O id da categoria é inválido!'
         }
     },
-    supplier: [{
-        type: mongoose.Schema.Types.ObjectId, // Referência direta ao Fornecedor
-        ref: 'Fornecedor',
+    brand: {
+        type: String,
         required: true,
         validate: {
             validator: function(value) {
-                return mongoose.Types.ObjectId.isValid(value);
+                return /^[A-Za-z\sáéíóúÁÉÍÓÇç]+$/.test(value);
             },
-            message: 'O id do fornecedor é inválido!'
+            message: 'Marca inválida! A marca deve conter apenas caracteres alfabéticos.'
+        }
+    },
+    // array de fornecedores, e para cada posicao do array terá a referencia de forncedor, subtotal e a subquantidade
+    suppliers: [{
+        supplier: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Fornecedor',
+            required: true,
+            validate: {
+                validator: function(value) {
+                    return mongoose.Types.ObjectId.isValid(value);
+                },
+                message: 'O id do fornecedor é inválido!'
+            }
+        },
+        subtotal: {
+            type: Number,
+            required: true,
+            validate: {
+                validator: function(value) {
+                    return value >= 0;
+                },
+                message: 'Subtotal inválido! O subtotal deve ser um número positivo.'
+            }
+        },
+        subquantity: {
+            type: Number,
+            required: true,
+            validate: {
+                validator: function(value) {
+                    return value >= 0;
+                },
+                message: 'Subquantidade inválida! A subquantidade deve ser um número positivo.'
+            }
         }
     }],
-    quantity: {
+    totalQuantity: {
         type: Number,
         required: true,
         validate: {
