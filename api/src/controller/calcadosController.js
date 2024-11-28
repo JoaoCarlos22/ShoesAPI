@@ -202,8 +202,9 @@ exports.updateCalçado = async (req, res) => {
                     }
 
                     const parsedSubquantity = parseInt(subquantity, 10);
-                    if (isNaN(parsedSubquantity) || parsedSubquantity < 0) {
-                        throw new Error(`Subquantidade inválida: ${subquantity}`);
+                    if (isNaN(parsedSubquantity) || parsedSubquantity <= 0) { 
+                        // Se subquantity não é válido ou é 0, ignora esse fornecedor
+                        return null;
                     }
 
                     const parsedSubtotal = parseFloat(subtotal.replace('R$', '').trim());
@@ -219,12 +220,16 @@ exports.updateCalçado = async (req, res) => {
                     };
                 });
             });
-            // atualiza a lista de fonecedores
-            calçado.suppliers = processedSuppliers;
+            // Atualiza a lista de fornecedores se houver pelo menos um válido
+            if (processedSuppliers.length > 0) {
+                calçado.suppliers = processedSuppliers;
+            } else {
+                calçado.suppliers = []; // Nenhum fornecedor com subquantity válida
+            };
         } else {
             // se não há fornecedores, remove todos os fornecedores
             calçado.suppliers = [];
-         }
+        }
 
         // atualiza os dados do calçado (quantidade e/ou preço)
         // se houver preço, ele atualiza

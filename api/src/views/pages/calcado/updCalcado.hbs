@@ -168,15 +168,33 @@
     }
 
     // Função para verificar alterações manuais na quantidade total
-    function handleQuantityInputChange() {
-        const currentValue = parseInt(quantityInput.value || 0, 10);
+function handleQuantityInputChange() {
+    const currentValue = parseInt(quantityInput.value || 0, 10);
 
-        // Se o usuário tentar aumentar o valor acima do calculado sem selecionar fornecedores
-        if (currentValue < initialTotalQuantity) {
-            alert("Você não pode aumentar a quantidade total sem selecionar fornecedores.");
-            quantityInput.value = initialTotalQuantity; // Volta para o valor inicial de shoe.totalQuantity
+    // Verifica se existe pelo menos um fornecedor selecionado
+    const cards = supplierCards.querySelectorAll(".card");
+    let hasSelectedSupplier = false;
+
+    cards.forEach(card => {
+        const checkbox = card.querySelector("input[type='checkbox']");
+        if (checkbox.checked) {
+            hasSelectedSupplier = true;
         }
+    });
+
+    // Permite diminuir a quantidade total sem fornecedor, mas restringe aumento sem fornecedor
+    if (!hasSelectedSupplier && currentValue > initialTotalQuantity) {
+        alert("Você não pode aumentar a quantidade total sem selecionar fornecedores.");
+        quantityInput.value = initialTotalQuantity; // Volta para o valor inicial
+        return;
     }
+
+    // Garante que o valor não seja menor que zero
+    if (currentValue < 0) {
+        alert("A quantidade total não pode ser menor que zero.");
+        quantityInput.value = 0; // Define o valor mínimo como 0
+    }
+}
 
      // Adiciona evento para subquantidade de cada fornecedor
     function handleSubquantityChange() {
