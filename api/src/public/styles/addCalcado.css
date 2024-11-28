@@ -55,6 +55,11 @@ form select:focus {
 
 }
 
+.unit-price {
+    max-width: 80px;
+    border: none;
+}
+
 .card-qtd {
     border-radius: 5px;
     max-width: 40px;

@@ -48,8 +48,8 @@
                         <input type="checkbox" id="supplier-{{this._id}}" name="suppliers[{{this._id}}][supplier]" value="{{this._id}}">
                         <label for="supplier-{{this._id}}">
                             <h3>{{this.name}}</h3>
-                            <p class="unit-price" name="suppliers[{{this._id}}][subtotal]">SubTotal: R$ --</p>
-                            <p>Subquantidade: <input class="card-qtd" type="number" name="suppliers[{{this._id}}][subquantity]" min="1" required></p>
+                            <p>SubTotal:  <input class="unit-price" id="suppliers[{{this._id}}][subtotal]"  value="R$ --"></p>
+                            <p>Subquantidade: <input class="card-qtd" type="number" name="suppliers[{{this._id}}][subquantity]" id="suppliers-{{this._id}}[subquantity]" min="1" required></p>
                         </label>
                     </div>
                     {{/each}}
@@ -85,7 +85,7 @@
     // Variável para armazenar preços dos fornecedores globalmente
     let supplierPrices = [];
 
-    // Função para destacar os fornecedores escolhidos - ok
+    // Função para destacar os fornecedores escolhidos
     function highlightSelectedSuppliers() {
         const cards = supplierCards.querySelectorAll(".card");
 
@@ -100,7 +100,7 @@
         });
     }
 
-    // Função para buscar preços atualizados - ok
+    // Função para buscar preços atualizados
     async function fetchPrices() {
         const category = categorySelect.value;
         const brand = brandSelect.value;
@@ -125,7 +125,7 @@
         }
     }
 
-    // Função para buscar preços e atualizar cards - ok
+    // Função para buscar preços e atualizar cards
     async function fetchUpdatedPrices() {
         try {
             supplierPrices = await fetchPrices();
@@ -135,7 +135,7 @@
         }
     }
 
-    // Função para atualizar os preços nos cards - ok
+    // Função para atualizar os preços nos cards
     function updateSupplierPrices(suppliers) {
         const cards = supplierCards.querySelectorAll(".card");
 
@@ -146,39 +146,36 @@
 
         cards.forEach(card => {
             const supplierId = card.dataset.id;
-            const priceElement = card.querySelector(".unit-price");
+            const priceInput = card.querySelector(".unit-price");
             const subquantityInput = card.querySelector(".card-qtd");
-
-            
 
             if (supplierPrices[supplierId]) {
                 const unitPrice = supplierPrices[supplierId];
                 card.setAttribute("data-unit-price", unitPrice);
-                priceElement.textContent = `Preço Unitário: R$ ${unitPrice.toFixed(2)}`;
+                priceInput.value = `R$ ${unitPrice.toFixed(2)}`;
                 subquantityInput.value = 1; // Define valor inicial
                 subquantityInput.disabled = true; // Desabilita alteração sem selecionar o fornecedor
             } else {
-                priceElement.textContent = "Preço Unitário: R$ --";
+                priceInput.value = "R$ --";
                 subquantityInput.value = "";
                 subquantityInput.disabled = true;
             }
         });
-        
     }
 
     // Função para atualizar o subtotal de um fornecedor
     function updateSubtotal(card) {
         const supplierId = card.dataset.id;
         const subquantityInput = card.querySelector(".card-qtd");
+        const subtotalInput = card.querySelector(".unit-price"); // Agora é um input
         const unitPrice = supplierPrices[supplierId] || 0;
         const subquantity = parseInt(subquantityInput.value || 0, 10);
         const subtotal = unitPrice * subquantity;
 
-        const priceElement = card.querySelector(".unit-price");
-        priceElement.textContent = `Subtotal: R$ ${subtotal.toFixed(2)}`;
+        subtotalInput.value = `R$ ${subtotal.toFixed(2)}`; // Atualiza o valor do input
         updateTotalPriceAndQuantity();
     }
-    
+
     // Função para calcular e atualizar o preço total e a quantidade total
     function updateTotalPriceAndQuantity() {
         let totalPrice = 0;
@@ -201,8 +198,9 @@
                 subquantityInput.disabled = false;
             } else {
                 subquantityInput.disabled = true;
-            }       
+            }
         });
+
         priceInput.value = totalPrice.toFixed(2);
         quantityInput.value = totalQuantity;
 

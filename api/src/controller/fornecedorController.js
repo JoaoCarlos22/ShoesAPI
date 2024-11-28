@@ -159,8 +159,6 @@ exports.getPrices = async (req, res) => {
     try {
         const { category, brand } = req.query;
 
-        console.log("Parâmetros recebidos:", { category, brand });
-
         // Validação de parâmetros
         if (!category || !brand) {
             return res.status(400).json({ message: "Parâmetros inválidos. Certifique-se de fornecer a categoria e a marca." });
@@ -197,8 +195,6 @@ exports.getPrices = async (req, res) => {
             }
             return null; // Ignora caso não encontre um preço válido
         }).filter(item => item !== null); // Remove itens nulos do resultado
-
-        console.log('Prices: ', prices)
 
         if (!prices.length) {
             return res.status(404).json({ message: "Nenhuma correspondência encontrada para a categoria e marca especificadas." });

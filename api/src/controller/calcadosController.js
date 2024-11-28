@@ -59,16 +59,54 @@ exports.getCadastroCalçado = async (req, res) => {
 
 exports.createCalçado = async (req, res) => {
     try {
-        const suppliersArray = req.body.suppliers || []; // Captura os fornecedores passados
-        let totalQuantity = 0; // Inicializa a soma das subquantidades
-        let totalPrice = 0; // Inicializa a soma dos subtotais
+        // Confirme que suppliers é um array
+        const suppliersArray = Array.isArray(req.body.suppliers) ? req.body.suppliers : [req.body.suppliers];
+        console.log("Array de suppliers",suppliersArray);
+        
+        const categoryId = req.body.category; // Categoria do formulário
+        const brandName = req.body.brand; // Marca do formulário
 
-        // Calcula os valores de totalQuantity e totalPrice
-        suppliersArray.forEach(supplier => {
-            totalQuantity += supplier.subquantity; // Soma a subquantidade de cada fornecedor
-            totalPrice += supplier.subtotal; // Soma o subtotal de cada fornecedor
+        // Simulação da busca de fornecedores no banco
+        const allSuppliers = await Fornecedor.find({});
+
+        // Processa cada fornecedor para calcular o subtotal
+        const processedSuppliers = Object.values(suppliersArray).map(supplier => {
+            console.log("Supplier atual",supplier)
+
+            const matchingSupplier = allSuppliers.find(s => s._id === supplier.supplier);
+
+            if (!matchingSupplier) {
+                throw new Error(`Fornecedor com ID ${supplier.supplier} não encontrado.`);
+            }
+
+            // Busca o preço no catálogo do fornecedor
+            let unitPrice = 0;
+            matchingSupplier.catalog.forEach(item => {
+                if (item.category.toString() === categoryId) {
+                    const matchingBrand = item.brand.find(brand => brand.name === brandName);
+                    if (matchingBrand) {
+                        unitPrice = matchingBrand.price;
+                    }
+                }
+            });
+
+            if (!unitPrice) {
+                throw new Error(
+                    `Preço não encontrado para a categoria ${categoryId} e marca ${brandName} no fornecedor ${matchingSupplier.name}.`
+                );
+            }
+
+            // Calcula subtotal
+            const subquantity = parseInt(supplier.subquantity, 10);
+            const subtotal = unitPrice * subquantity;
+
+            return {
+                supplier: supplier.supplier,
+                subquantity,
+                subtotal,
+            };
         });
-
+    
         // Cria o novo calçado com os dados recebidos
         const newCalçado = new Calçado({
             name: req.body.name,
@@ -77,9 +115,9 @@ exports.createCalçado = async (req, res) => {
             color: req.body.color,
             category: req.body.category,
             brand: req.body.brand,
-            suppliers: suppliersArray,
-            totalQuantity, // Total de subquantidades calculadas
-            totalPrice, // Total de subtotais calculados
+            suppliers: processedSuppliers,
+            totalQuantity: req.body.quantity, // Total de subquantidades calculadas
+            totalPrice: req.body.price, // Total de subtotais calculados
         });
 
         // Salva o calçado no banco de dados
