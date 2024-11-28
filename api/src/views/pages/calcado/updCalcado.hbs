@@ -145,6 +145,7 @@
         cards.forEach(card => {
             const checkbox = card.querySelector("input[type='checkbox']");
             const subquantityInput = card.querySelector(".card-qtd");
+            const subtotalInput = card.querySelector(".unit-price");
 
             if (checkbox.checked) {
                 const supplierId = card.dataset.id;
@@ -153,6 +154,7 @@
 
                 totalPrice += unitPrice * subquantity;
                 totalQuantity += subquantity;
+                subtotalInput.value = `R$ ${(unitPrice * subquantity).toFixed(2)}`; // Atualiza o preço subtotal
 
                 subquantityInput.disabled = false;
             } else {
