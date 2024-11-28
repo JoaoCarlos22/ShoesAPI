@@ -76,137 +76,147 @@
 </div>
 
 <script>
-const categorySelect = document.getElementById("category");
-const brandSelect = document.getElementById("brand");
-const supplierCards = document.getElementById("supplier-cards");
-const priceInput = document.getElementById("price");
-const quantityInput = document.getElementById("quantity");
+    const categorySelect = document.getElementById("category");
+    const brandSelect = document.getElementById("brand");
+    const supplierCards = document.getElementById("supplier-cards");
+    const priceInput = document.getElementById("price");
+    const quantityInput = document.getElementById("quantity");
 
-// Variável para armazenar preços dos fornecedores globalmente
-let supplierPrices = [];
+    // Variável para armazenar preços dos fornecedores globalmente
+    let supplierPrices = [];
 
-// Função para buscar preços atualizados
-async function fetchPrices() {
-    const category = categorySelect.value;
-    const brand = brandSelect.value;
+    // Função para destacar os fornecedores escolhidos - ok
+    function highlightSelectedSuppliers() {
+        const cards = supplierCards.querySelectorAll(".card");
 
-    if (!category || !brand) {
-        updateSupplierPrices([]);
-        return [];
-    }
-
-    try {
-        const response = await fetch(`/ShoesSystem/getPrices?category=${category}&brand=${brand}`);
-        if (response.ok) {
-            const suppliers = await response.json(); // Recebe o array de objetos com os preços
-            return suppliers;
-        } else {
-            console.error("Erro ao buscar preços:", await response.text());
-            return [];
-        }
-    } catch (error) {
-        console.error("Erro ao buscar preços:", error);
-        return [];
-    }
-}
-
-// Função para buscar preços e atualizar cards
-async function fetchUpdatedPrices() {
-    try {
-        supplierPrices = await fetchPrices();
-        updateSupplierPrices(supplierPrices);
-    } catch (error) {
-        console.error("Erro ao atualizar preços:", error);
-    }
-}
-
-// Função para atualizar os preços nos cards
-function updateSupplierPrices(suppliers) {
-    const cards = supplierCards.querySelectorAll(".card");
-
-    cards.forEach(card => {
-        const supplierId = card.dataset.id;
-        const priceElement = card.querySelector(".unit-price");
-
-        const supplierData = suppliers.find(supplier => supplier.supplierId === supplierId);
-
-        if (supplierData) {
-            priceElement.textContent = `Preço Unitário: R$ ${supplierData.price.toFixed(2)}`;
-        } else {
-            priceElement.textContent = "Preço Unitário: R$ --";
-        }
-    });
-
-    // Reseta os campos apenas se não houver fornecedores selecionados
-    const selectedSuppliers = supplierCards.querySelectorAll(".card input[type='checkbox']:checked");
-    if (selectedSuppliers.length === 0) {
-        priceInput.value = "";
-        quantityInput.value = "";
-    }
-}
-
-// Função para atualizar o preço total e a quantidade
-function updateTotalPriceAndQuantity() {
-    const selectedSuppliers = supplierCards.querySelectorAll(".card input[type='checkbox']:checked");
-
-    let totalPrice = 0;
-    let quantity = selectedSuppliers.length;
-
-    selectedSuppliers.forEach(checkbox => {
-        const supplierId = checkbox.value;
-        const supplierData = supplierPrices.find(supplier => supplier.supplierId === supplierId);
-        if (supplierData) {
-            totalPrice += supplierData.price;
-        }
-    });
-
-    priceInput.value = totalPrice.toFixed(2);
-    quantityInput.value = Math.max(1, quantity); // Garante quantidade mínima de 1
-    quantityInput.min = quantity; // Define o mínimo como o número de fornecedores selecionados
-}
-
-// Atualiza o preço automaticamente ao alterar a quantidade
-quantityInput.addEventListener("input", () => {
-    const selectedSuppliers = supplierCards.querySelectorAll(".card input[type='checkbox']:checked");
-    const quantity = parseInt(quantityInput.value, 10);
-
-    if (!isNaN(quantity) && quantity > 0) {
-        let totalPrice = 0;
-
-        selectedSuppliers.forEach(checkbox => {
-            const supplierId = checkbox.value;
-            const supplierData = supplierPrices.find(supplier => supplier.supplierId === supplierId);
-            if (supplierData) {
-                totalPrice += supplierData.price;
+        cards.forEach(card => {
+            const checkbox = card.querySelector("input[type='checkbox']");
+            // Alterna a classe 'selected' com base no estado do checkbox
+            if (checkbox.checked) {
+                card.classList.add("selected");
+            } else {
+                card.classList.remove("selected");
             }
         });
-
-        priceInput.value = (totalPrice * quantity).toFixed(2);
     }
-});
 
-// Função para destacar os fornecedores escolhidos
-function highlightSelectedSuppliers() {
-    const cards = supplierCards.querySelectorAll(".card");
+    // Função para buscar preços atualizados - ok
+    async function fetchPrices() {
+        const category = categorySelect.value;
+        const brand = brandSelect.value;
 
-    cards.forEach(card => {
-        const checkbox = card.querySelector("input[type='checkbox']");
-        // Alterna a classe 'selected' com base no estado do checkbox
-        if (checkbox.checked) {
-            card.classList.add("selected");
+        if (!category || !brand) {
+            updateSupplierPrices([]);
+            return [];
+        }
+
+        try {
+            const response = await fetch(`/ShoesSystem/getPrices?category=${category}&brand=${brand}`);
+            if (response.ok) {
+                const suppliers = await response.json(); // Recebe o array de objetos com os preços
+                return suppliers;
+            } else {
+                console.error("Erro ao buscar preços:", await response.text());
+                return [];
+            }
+        } catch (error) {
+            console.error("Erro ao buscar preços:", error);
+            return [];
+        }
+    }
+
+    // Função para buscar preços e atualizar cards - ok
+    async function fetchUpdatedPrices() {
+        try {
+            supplierPrices = await fetchPrices();
+            updateSupplierPrices(supplierPrices);
+        } catch (error) {
+            console.error("Erro ao atualizar preços:", error);
+        }
+    }
+
+    // Função para atualizar os preços nos cards - ok
+    function updateSupplierPrices(suppliers) {
+        const cards = supplierCards.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            const supplierId = card.dataset.id;
+            const priceElement = card.querySelector(".unit-price");
+            const subquantityInput = card.querySelector(".card-qtd");
+
+            const supplierData = suppliers.find(supplier => supplier.supplierId.toString() === supplierId);
+
+            if (supplierData) {
+                priceElement.textContent = `Preço Unitário: R$ ${supplierData.price.toFixed(2)}`;
+                subquantityInput.value = 1; // Define valor inicial
+                subquantityInput.disabled = true; // Desabilita alteração sem selecionar o fornecedor
+            } else {
+                priceElement.textContent = "Preço Unitário: R$ --";
+                subquantityInput.value = "";
+                subquantityInput.disabled = false;
+            }
+        });
+        
+    }
+
+    // Função para atualizar o subtotal de um fornecedor
+    function updateSubtotal(card) {
+        const subtotalElement = card.querySelector(".unit-price");
+        const subquantityInput = card.querySelector(".card-qtd");
+        const price = parseFloat(subtotalElement.textContent.split("R$ ")[1] || 0);
+        const subquantity = parseInt(subquantityInput.value || 0, 10);
+        const subtotal = price * subquantity;
+
+        subtotalElement.textContent = `Subtotal: R$ ${subtotal.toFixed(2)}`;
+        updateTotalPriceAndQuantity();
+    }
+    
+    // Função para calcular e atualizar o preço total e a quantidade total
+    function updateTotalPriceAndQuantity() {
+        let totalPrice = 0;
+        let totalQuantity = 0;
+
+        const cards = supplierCards.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            const checkbox = card.querySelector("input[type='checkbox']");
+            const subquantityInput = card.querySelector(".card-qtd");
+
+            if (checkbox.checked) {
+                const subquantity = parseInt(subquantityInput.value);
+                const priceElement = card.querySelector(".unit-price");
+                const price = parseFloat(priceElement.textContent.split("R$ ")[1] || 0);
+
+                totalPrice += price * subquantity;
+                totalQuantity += subquantity;
+                subquantityInput.disabled = false;
         } else {
-            card.classList.remove("selected");
+            subquantityInput.disabled = true;
+        }
+
+            priceInput.value = totalPrice.toFixed(2);
+            quantityInput.value = totalQuantity;
+
+            // Desabilita botão de submeter caso não haja fornecedores selecionados
+            document.querySelector(".btn-submit").disabled = totalQuantity === 0;        
+    });}
+
+    // Eventos para atualizar os preços ao mudar categoria ou marca
+    categorySelect.addEventListener("change", fetchUpdatedPrices);
+    brandSelect.addEventListener("change", fetchUpdatedPrices);
+    supplierCards.addEventListener("change", highlightSelectedSuppliers);
+
+    // Eventos para habilitar/atualizar o subtotal ao selecionar fornecedores
+    supplierCards.addEventListener("change", event => {
+        const card = event.target.closest(".card");
+        if (card) updateSubtotal(card);
+    });
+
+    // Evento para atualizar o subtotal ao alterar a subquantidade
+    supplierCards.addEventListener("input", event => {
+        if (event.target.classList.contains("card-qtd")) {
+            const card = event.target.closest(".card");
+            updateSubtotal(card);
         }
     });
-}
-
-// Eventos para atualizar os preços ao mudar categoria ou marca
-categorySelect.addEventListener("change", fetchUpdatedPrices);
-brandSelect.addEventListener("change", fetchUpdatedPrices);
-// Eventos para atualizar o preço total e a quantidade ao selecionar fornecedores
-supplierCards.addEventListener("change", updateTotalPriceAndQuantity);
-
-// Eventos para atualizar o card de fornecedores
-supplierCards.addEventListener("change", highlightSelectedSuppliers);
 </script>
-
