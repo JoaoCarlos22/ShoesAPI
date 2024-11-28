@@ -70,6 +70,21 @@
     let supplierPrices = [];
     const initialTotalQuantity = parseInt("{{shoe.totalQuantity}}", 10) || 0;
 
+    // Função para destacar os fornecedores escolhidos
+    function highlightSelectedSuppliers() {
+        const cards = supplierCards.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            const checkbox = card.querySelector("input[type='checkbox']");
+            // Alterna a classe 'selected' com base no estado do checkbox
+            if (checkbox.checked) {
+                card.classList.add("selected");
+            } else {
+                card.classList.remove("selected");
+            }
+        });
+    }
+
     // Função para buscar preços com base na categoria e marca
     async function fetchPrices(category, brand) {
         if (!category || !brand) {
@@ -204,6 +219,7 @@
     });
 
     quantityInput.addEventListener("input", handleQuantityInputChange);
+    supplierCards.addEventListener("change", highlightSelectedSuppliers);
 
     // Inicializa os preços na primeira carga da página
     initializePrices();
