@@ -139,21 +139,28 @@
     function updateSupplierPrices(suppliers) {
         const cards = supplierCards.querySelectorAll(".card");
 
+        supplierPrices = suppliers.reduce((acc, supplier) => {
+            acc[supplier.supplierId] = supplier.price; // Associa o preço ao ID do fornecedor
+            return acc;
+        }, {});
+
         cards.forEach(card => {
             const supplierId = card.dataset.id;
             const priceElement = card.querySelector(".unit-price");
             const subquantityInput = card.querySelector(".card-qtd");
 
-            const supplierData = suppliers.find(supplier => supplier.supplierId.toString() === supplierId);
+            
 
-            if (supplierData) {
-                priceElement.textContent = `Preço Unitário: R$ ${supplierData.price.toFixed(2)}`;
+            if (supplierPrices[supplierId]) {
+                const unitPrice = supplierPrices[supplierId];
+                card.setAttribute("data-unit-price", unitPrice);
+                priceElement.textContent = `Preço Unitário: R$ ${unitPrice.toFixed(2)}`;
                 subquantityInput.value = 1; // Define valor inicial
                 subquantityInput.disabled = true; // Desabilita alteração sem selecionar o fornecedor
             } else {
                 priceElement.textContent = "Preço Unitário: R$ --";
                 subquantityInput.value = "";
-                subquantityInput.disabled = false;
+                subquantityInput.disabled = true;
             }
         });
         
@@ -161,13 +168,14 @@
 
     // Função para atualizar o subtotal de um fornecedor
     function updateSubtotal(card) {
-        const subtotalElement = card.querySelector(".unit-price");
+        const supplierId = card.dataset.id;
         const subquantityInput = card.querySelector(".card-qtd");
-        const price = parseFloat(subtotalElement.textContent.split("R$ ")[1] || 0);
+        const unitPrice = supplierPrices[supplierId] || 0;
         const subquantity = parseInt(subquantityInput.value || 0, 10);
-        const subtotal = price * subquantity;
+        const subtotal = unitPrice * subquantity;
 
-        subtotalElement.textContent = `Subtotal: R$ ${subtotal.toFixed(2)}`;
+        const priceElement = card.querySelector(".unit-price");
+        priceElement.textContent = `Subtotal: R$ ${subtotal.toFixed(2)}`;
         updateTotalPriceAndQuantity();
     }
     
@@ -183,23 +191,24 @@
             const subquantityInput = card.querySelector(".card-qtd");
 
             if (checkbox.checked) {
-                const subquantity = parseInt(subquantityInput.value);
-                const priceElement = card.querySelector(".unit-price");
-                const price = parseFloat(priceElement.textContent.split("R$ ")[1] || 0);
+                const supplierId = card.dataset.id;
+                const unitPrice = supplierPrices[supplierId] || 0;
+                const subquantity = parseInt(subquantityInput.value || 0, 10);
 
-                totalPrice += price * subquantity;
+                totalPrice += unitPrice * subquantity;
                 totalQuantity += subquantity;
+
                 subquantityInput.disabled = false;
-        } else {
-            subquantityInput.disabled = true;
-        }
+            } else {
+                subquantityInput.disabled = true;
+            }       
+        });
+        priceInput.value = totalPrice.toFixed(2);
+        quantityInput.value = totalQuantity;
 
-            priceInput.value = totalPrice.toFixed(2);
-            quantityInput.value = totalQuantity;
-
-            // Desabilita botão de submeter caso não haja fornecedores selecionados
-            document.querySelector(".btn-submit").disabled = totalQuantity === 0;        
-    });}
+        // Desabilita botão de submeter caso não haja fornecedores selecionados
+        document.querySelector(".btn-submit").disabled = totalQuantity === 0;
+    }
 
     // Eventos para atualizar os preços ao mudar categoria ou marca
     categorySelect.addEventListener("change", fetchUpdatedPrices);
