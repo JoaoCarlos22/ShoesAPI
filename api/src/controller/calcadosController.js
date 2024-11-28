@@ -1,6 +1,7 @@
 const Calçado = require("../models/calcadoModel.js");
 const Categoria = require("../models/categoriaModel.js");
 const Fornecedor = require("../models/fornecedorModel.js");
+const mongoose = require("mongoose");
 
 // Lista todos os calçados existentes no banco
 exports.getCalçados = async (req, res) => {
@@ -26,8 +27,11 @@ exports.getCalçado = async (req, res) => {
         // Busca o calçado pelo ID e popula as informações de categoria e fornecedor
         const calcado = await Calçado.findById(req.params.id)
             .populate('category') // Popula a categoria
-           // .populate('supplier'); // Popula o fornecedor
-
+            .populate({
+                path: 'suppliers.supplier', // Popula o campo `supplier` dentro de `suppliers`
+                select: 'name', // Seleciona apenas o nome do fornecedor
+                model: Fornecedor
+            });
         // Verifica se o calçado existe
         if (!calcado) {
             return res.status(404).send('Calçado não encontrado!');
@@ -59,22 +63,41 @@ exports.getCadastroCalçado = async (req, res) => {
 
 exports.createCalçado = async (req, res) => {
     try {
-        // Confirme que suppliers é um array ou transforme-o em um array
+        // Certifica-se de que suppliers é um array
         const suppliersArray = Array.isArray(req.body.suppliers) ? req.body.suppliers : [req.body.suppliers];
-        console.log("Array de suppliers", suppliersArray);
 
-        // Processa cada fornecedor para calcular o subtotal
-        const processedSuppliers = suppliersArray.map(supplierObj => {
-            // Cada `supplierObj` é um objeto onde as chaves são IDs e os valores são os dados do fornecedor
-            const supplierId = Object.keys(supplierObj)[0]; // Extrai a chave (ID do fornecedor)
-            const supplierData = supplierObj[supplierId];  // Extrai os dados correspondentes a este ID
+        console.log("Array de suppliers recebido:", suppliersArray);
 
-            return {
-                supplier: supplierId, // Usa o ID como `supplier`
-                subquantity: parseInt(supplierData.subquantity, 10), // Certifica-se de que subquantity é um número
-                subtotal: parseFloat(supplierData.subtotal.replace('R$', '').trim()), // Remove o "R$" e converte para float
-            };
+        // Processa cada fornecedor
+        const processedSuppliers = suppliersArray.flatMap(supplierObj => {
+            // Itera sobre as chaves do objeto (IDs dos fornecedores)
+            return Object.keys(supplierObj).map(supplierId => {
+                const { subtotal, subquantity } = supplierObj[supplierId]; // Extrai os dados do fornecedor
+
+                // Validações
+                if (!mongoose.Types.ObjectId.isValid(supplierId)) {
+                    throw new Error(`ID do fornecedor inválido: ${supplierId}`);
+                }
+
+                const parsedSubquantity = parseInt(subquantity, 10);
+                if (isNaN(parsedSubquantity) || parsedSubquantity < 0) {
+                    throw new Error(`Subquantidade inválida: ${subquantity}`);
+                }
+
+                const parsedSubtotal = parseFloat(subtotal.replace('R$', '').trim());
+                if (isNaN(parsedSubtotal) || parsedSubtotal < 0) {
+                    throw new Error(`Subtotal inválido: ${subtotal}`);
+                }
+
+                // Retorna o fornecedor processado
+                return {
+                    supplier: supplierId,        // ID do fornecedor
+                    subquantity: parsedSubquantity, // Subquantidade convertida
+                    subtotal: parsedSubtotal        // Subtotal convertido
+                };
+            });
         });
+
     
         // Cria o novo calçado com os dados recebidos
         const newCalçado = new Calçado({

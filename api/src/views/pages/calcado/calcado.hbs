@@ -1,38 +1,60 @@
 <main class="shoe-details-container">
-  <h1>Detalhes do Calçado</h1>
-  
-  <div class="shoe-details">
-    <div class="shoe-field">
-      <strong>Nome:</strong> {{shoe.name}}
+  <h1>{{shoe.name}}</h1>
+
+  <div class="details-grid">
+    <!-- Coluna 1: DADOS -->
+    <div class="shoe-details">
+      <h2>DETALHES</h2>
+      <div class="shoe-field">
+        <strong>Gênero:</strong> {{shoe.gender}}
+      </div>
+      <div class="shoe-field">
+        <strong>Tamanho:</strong> {{shoe.size}}
+      </div>
+      <div class="shoe-field">
+        <strong>Cor:</strong> {{shoe.color}}
+      </div>
+      <div class="shoe-field">
+        <strong>Categoria:</strong> {{shoe.category.name}}
+      </div>
+      <div class="shoe-field">
+        <strong>Marca:</strong> {{shoe.brand}}
+      </div>
+      <div class="shoe-field">
+        <strong>Preço total:</strong> R$ {{shoe.totalPrice}}
+      </div>
+      <div class="shoe-field">
+        <strong>Quantidade:</strong> {{shoe.totalQuantity}}
+      </div>
     </div>
-    <div class="shoe-field">
-      <strong>Gênero:</strong> {{shoe.gender}}
+
+    <!-- Coluna 2: FORNECEDORES -->
+    <div class="supplier-details">
+      <h2>FORNECEDORES</h2>
+      {{#each shoe.suppliers}}
+      <div class="supplier-group">
+        <div class="shoe-field"><strong>Fornecedor:</strong> {{this.supplier.name}}</div>
+        <div class="shoe-field"><strong>Subtotal:</strong> R$ {{this.subtotal}}</div>
+        <div class="shoe-field"><strong>Subquantidade:</strong> {{this.subquantity}}</div>
+      </div>
+      {{/each}}
     </div>
-    <div class="shoe-field">
-      <strong>Tamanho:</strong> {{shoe.size}}
-    </div>
-    <div class="shoe-field">
-      <strong>Cor:</strong> {{shoe.color}}
-    </div>
-    <div class="shoe-field">
-      <strong>Categoria:</strong> {{shoe.category.name}}
-    </div>
-    <div class="shoe-field">
-      <strong>Marca:</strong> {{shoe.brand}}
-    </div>
-    <div class="shoe-field">
-      <strong>Preço total:</strong> R$ {{shoe.totalPrice}}
-    </div>
-    <div class="shoe-field">
-      <strong>Quantidade:</strong> {{shoe.quantity}}
-    </div>
-    
   </div>
 
+  <!-- Botões de ação -->
   <div class="actions">
-    <button type="button" class="btn btn-edit" onclick="window.location.href='/ShoesSystem/updCalcado/{{shoe._id}}'"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16"><path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/></svg>Editar</button>
+    <button type="button" class="btn btn-edit" onclick="window.location.href='/ShoesSystem/updCalcado/{{shoe._id}}'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+      </svg>Editar
+    </button>
 
-    <button id="btn-excluir-{{shoe._id}}" type="button" class="btn btn-danger" data-shoe-id="{{shoe._id}}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path></svg>Excluir</button>     
+    <button id="btn-excluir-{{shoe._id}}" type="button" class="btn btn-danger" data-shoe-id="{{shoe._id}}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"></path>
+        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"></path>
+      </svg>Excluir
+    </button>
 
     <button class="btn btn-back" onclick="window.location.href='/ShoesSystem/home'">Voltar</button>
   </div>

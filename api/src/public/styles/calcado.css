@@ -1,39 +1,64 @@
 /* Container principal */
 .shoe-details-container {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Título */
-  .shoe-details-container h1 {
-    font-size: 28px;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-  }
-  
-  /* Campos do calçado */
-  .shoe-details {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    padding: 20px;
-  }
-  
-  .shoe-field {
-    margin-bottom: 15px;
-    font-size: 16px;
-  }
-  
-  .shoe-field strong {
-    color: #555;
-  }
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+/* Título */
+.shoe-details-container h1 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+  gap: 20px; /* Espaço entre as colunas */
+  align-items: start; /* Alinha as colunas no topo */
+}
+
+/* Campos do calçado */
+.shoe-details, .supplier-details {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  height: auto; /* Garante altura consistente */
+  min-height: 300px; /* Ajuste opcional para uniformidade */
+}
+
+/* Espaçamento entre grupos de fornecedores */
+.supplier-group {
+  margin-bottom: 5px; /* Define o espaço entre cada fornecedor */
+  padding-bottom: 10px; /* Opcional: cria espaço interno inferior */
+  border-bottom: none; /* Opcional: linha separadora */
+}
+
+/* Campos individuais */
+.shoe-field {
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+
+.shoe-field strong, .supplier-field strong {
+  color: #555;
+}
+
+.supplier-details h2, .shoe-details h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
   .actions{
+    margin-top: 30px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
