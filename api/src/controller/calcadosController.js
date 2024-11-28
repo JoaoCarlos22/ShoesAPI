@@ -177,15 +177,65 @@ exports.updateCalçado = async (req, res) => {
     try{
         // busca o calçado pelo id no banco de dados com findById()
         const calçado = await Calçado.findById(req.params.id)
-        
+
         // verifica se o calçado existe
         if (!calçado) {
             return res.status(404).send('Calçado não encontrado!');
-        }  
-        
+        }
+
+        // Certifica-se de que suppliers é um array
+        const suppliersArray = Array.isArray(req.body.suppliers) ? req.body.suppliers : [req.body.suppliers];
+
+        // verifica se há algum array (length diferente que zero)
+        if (suppliersArray.length > 0) {
+            console.log("Array de suppliers recebido:", suppliersArray);
+
+            // Processa cada fornecedor
+            const processedSuppliers = suppliersArray.flatMap(supplierObj => {
+                // Itera sobre as chaves do objeto (IDs dos fornecedores)
+                return Object.keys(supplierObj).map(supplierId => {
+                    const { subtotal, subquantity } = supplierObj[supplierId]; // Extrai os dados do fornecedor
+
+                    // Validações
+                    if (!mongoose.Types.ObjectId.isValid(supplierId)) {
+                        throw new Error(`ID do fornecedor inválido: ${supplierId}`);
+                    }
+
+                    const parsedSubquantity = parseInt(subquantity, 10);
+                    if (isNaN(parsedSubquantity) || parsedSubquantity < 0) {
+                        throw new Error(`Subquantidade inválida: ${subquantity}`);
+                    }
+
+                    const parsedSubtotal = parseFloat(subtotal.replace('R$', '').trim());
+                    if (isNaN(parsedSubtotal) || parsedSubtotal < 0) {
+                        throw new Error(`Subtotal inválido: ${subtotal}`);
+                    }
+
+                    // Retorna o fornecedor processado
+                    return {
+                        supplier: supplierId,        // ID do fornecedor
+                        subquantity: parsedSubquantity, // Subquantidade convertida
+                        subtotal: parsedSubtotal        // Subtotal convertido
+                    };
+                });
+            });
+            // atualiza a lista de fonecedores
+            calçado.suppliers = processedSuppliers;
+        } else {
+            // se não há fornecedores, remove todos os fornecedores
+            calçado.suppliers = [];
+         }
+
         // atualiza os dados do calçado (quantidade e/ou preço)
-        calçado.totalPrice = req.body.price;
-        calçado.quantity = req.body.quantity;
+        // se houver preço, ele atualiza
+        if (req.body.price) {
+            calçado.totalPrice = parseFloat(req.body.price.replace('R$', '').trim());
+        }
+        
+        // se houver quantidade, ele atualiza
+        if (req.body.quantity) {
+            calçado.totalQuantity = parseInt(req.body.quantity, 10);
+        }
         
         // salva os dados do calçado e volta para a Home
         await calçado.save();
