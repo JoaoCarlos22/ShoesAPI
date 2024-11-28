@@ -23,45 +23,191 @@
             </section>
             <section>
                 <h2>Marca:</h2>
-                 <input id="brand" name="brand" value= "{{shoe.brand}}" readonly>
-                </select>
+                <input id="brand" name="brand" value= "{{shoe.brand}}" readonly>
             </section>
             <section>
-                <h2>Preço:</h2>
-                <input type="text" id="price" name="price" value="{{shoe.totalPrice}}" readonly>
+                <h2>Fornecedores:</h2>
+                <div class="supplier-cards" id="supplier-cards">
+                     {{#each suppliers}}
+                    <div class="card" data-id="{{this._id}}">
+                        <input type="checkbox" id="supplier-{{this._id}}" name="suppliers[{{this._id}}][supplier]" value="{{this._id}}">
+                        <label for="supplier-{{this._id}}">
+                            <h3>{{this.name}}</h3>
+                            <p>SubTotal:  <input class="unit-price" name="suppliers[{{this._id}}][subtotal]" id="suppliers-{{this._id}}[subtotal]"  value="R$ --"></p>
+                            <p>Subquantidade: <input class="card-qtd" type="number" name="suppliers[{{this._id}}][subquantity]" id="suppliers-{{this._id}}[subquantity]" min="1" required></p>
+                        </label>
+                    </div>
+                    {{/each}}
+                </div>
+                <small>Selecione um ou mais fornecedores</small>
             </section>
             <section>
-                <h2>Quantidade:</h2>
-                <input type="number" id="quantity" name="quantity" value="{{shoe.quantity}}" min="1" required>
-            </section>
+                <h2>Preço total:</h2>
+                <input type="text" id="price" name="price" placeholder="Preço total será calculado automaticamente" readonly required>
+            </section>  
+            <section>
+                <h2>Quantidade total:</h2>
+                <input type="number" id="quantity" name="quantity" value="{{shoe.totalQuantity}}" min="1" required>
+            </section>                  
             <section>
                 <div class="actions">
                     <button type="submit" class="btn btn-submit">Atualizar</button>
                     <button class="btn btn-back" onclick="window.location.href='/ShoesSystem/home'">Voltar</button>
                 </div>
             </section>
-        </form>
+        </form>  
     </main>
 </div>
 
 <script>
-    // Obtém os elementos de quantidade e preço
-    const quantityInput = document.getElementById("quantity");
+    const categorySelect = document.getElementById("category");
+    const brandSelect = document.getElementById("brand");
+    const supplierCards = document.getElementById("supplier-cards");
     const priceInput = document.getElementById("price");
+    const quantityInput = document.getElementById("quantity");
 
-    // Define o preço unitário
-    const unitPrice = parseFloat("{{shoe.unitPrice}}") || 0; // Substitui pelo preço unitário
+    // Variável para armazenar preços dos fornecedores globalmente
+    let supplierPrices = [];
 
-    // Atualiza o preço automaticamente ao alterar a quantidade
-    quantityInput.addEventListener("input", () => {
-        const quantity = parseInt(quantityInput.value) || 0; // Quantidade digitada
+    // Função para destacar os fornecedores escolhidos
+    function highlightSelectedSuppliers() {
+        const cards = supplierCards.querySelectorAll(".card");
 
-        if (quantity > 0) {
-            // Calcula o novo preço total
-            const newPrice = (unitPrice * quantity);
-            priceInput.value = R$`${newPrice}`; // Atualiza o valor do campo de preço
-        } else {
-            priceInput.value = "R$ 0.00"; // Valor padrão se a quantidade for inválida
+        cards.forEach(card => {
+            const checkbox = card.querySelector("input[type='checkbox']");
+            // Alterna a classe 'selected' com base no estado do checkbox
+            if (checkbox.checked) {
+                card.classList.add("selected");
+            } else {
+                card.classList.remove("selected");
+            }
+        });
+    }
+
+    // Função para buscar preços atualizados
+    async function fetchPrices() {
+        const category = categorySelect.value;
+        const brand = brandSelect.value;
+
+        if (!category || !brand) {
+            updateSupplierPrices([]);
+            return [];
+        }
+
+        try {
+            const response = await fetch(`/ShoesSystem/getPrices?category=${category}&brand=${brand}`);
+            if (response.ok) {
+                const suppliers = await response.json(); // Recebe o array de objetos com os preços
+                return suppliers;
+            } else {
+                console.error("Erro ao buscar preços:", await response.text());
+                return [];
+            }
+        } catch (error) {
+            console.error("Erro ao buscar preços:", error);
+            return [];
+        }
+    }
+
+    // Função para buscar preços e atualizar cards
+    async function fetchUpdatedPrices() {
+        try {
+            supplierPrices = await fetchPrices();
+            updateSupplierPrices(supplierPrices);
+        } catch (error) {
+            console.error("Erro ao atualizar preços:", error);
+        }
+    }
+
+    // Função para atualizar os preços nos cards
+    function updateSupplierPrices(suppliers) {
+        const cards = supplierCards.querySelectorAll(".card");
+
+        supplierPrices = suppliers.reduce((acc, supplier) => {
+            acc[supplier.supplierId] = supplier.price; // Associa o preço ao ID do fornecedor
+            return acc;
+        }, {});
+
+        cards.forEach(card => {
+            const supplierId = card.dataset.id;
+            const priceInput = card.querySelector(".unit-price");
+            const subquantityInput = card.querySelector(".card-qtd");
+
+            if (supplierPrices[supplierId]) {
+                const unitPrice = supplierPrices[supplierId];
+                card.setAttribute("data-unit-price", unitPrice);
+                priceInput.value = `R$ ${unitPrice.toFixed(2)}`;
+                subquantityInput.value = 1; // Define valor inicial
+                subquantityInput.disabled = true; // Desabilita alteração sem selecionar o fornecedor
+            } else {
+                priceInput.value = "R$ --";
+                subquantityInput.value = "";
+                subquantityInput.disabled = true;
+            }
+        });
+    }
+
+    // Função para atualizar o subtotal de um fornecedor
+    function updateSubtotal(card) {
+        const supplierId = card.dataset.id;
+        const subquantityInput = card.querySelector(".card-qtd");
+        const subtotalInput = card.querySelector(".unit-price"); // Agora é um input
+        const unitPrice = supplierPrices[supplierId] || 0;
+        const subquantity = parseInt(subquantityInput.value || 0, 10);
+        const subtotal = unitPrice * subquantity;
+
+        subtotalInput.value = `R$ ${subtotal.toFixed(2)}`; // Atualiza o valor do input
+        updateTotalPriceAndQuantity();
+    }
+
+    // Função para calcular e atualizar o preço total e a quantidade total
+    function updateTotalPriceAndQuantity() {
+        let totalPrice = 0;
+        let totalQuantity = 0;
+
+        const cards = supplierCards.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            const checkbox = card.querySelector("input[type='checkbox']");
+            const subquantityInput = card.querySelector(".card-qtd");
+
+            if (checkbox.checked) {
+                const supplierId = card.dataset.id;
+                const unitPrice = supplierPrices[supplierId] || 0;
+                const subquantity = parseInt(subquantityInput.value || 0, 10);
+
+                totalPrice += unitPrice * subquantity;
+                totalQuantity += subquantity;
+
+                subquantityInput.disabled = false;
+            } else {
+                subquantityInput.disabled = true;
+            }
+        });
+
+        priceInput.value = totalPrice.toFixed(2);
+        quantityInput.value = totalQuantity;
+
+        // Desabilita botão de submeter caso não haja fornecedores selecionados
+        document.querySelector(".btn-submit").disabled = totalQuantity === 0;
+    }
+
+    // Eventos para atualizar os preços ao mudar categoria ou marca
+    categorySelect.addEventListener("change", fetchUpdatedPrices);
+    brandSelect.addEventListener("change", fetchUpdatedPrices);
+    supplierCards.addEventListener("change", highlightSelectedSuppliers);
+
+    // Eventos para habilitar/atualizar o subtotal ao selecionar fornecedores
+    supplierCards.addEventListener("change", event => {
+        const card = event.target.closest(".card");
+        if (card) updateSubtotal(card);
+    });
+
+    // Evento para atualizar o subtotal ao alterar a subquantidade
+    supplierCards.addEventListener("input", event => {
+        if (event.target.classList.contains("card-qtd")) {
+            const card = event.target.closest(".card");
+            updateSubtotal(card);
         }
     });
 </script>

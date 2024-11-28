@@ -47,6 +47,53 @@ form select:focus {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
+.supplier-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+
+}
+
+.unit-price {
+    max-width: 80px;
+    border: none;
+}
+
+.card-qtd {
+    border-radius: 5px;
+    max-width: 40px;
+    border: 0.5px solid #ccc;
+}
+
+.supplier-cards .card {
+    border: 1px solid #bdbdbd;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 15px;
+    flex: 1 1 calc(33.333% - 10px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.supplier-cards .card:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(82, 82, 82, 0.657);
+}
+
+.card.selected {
+    border: 2px solid #8e15af; /* Azul para indicar seleção */
+    background-color: #f0f8ff; /* Azul claro para contraste */
+    box-shadow: 0 0 10px #A68DAD; /* Realce */
+    transition: all 0.3s ease; /* Suavidade na transição */
+}
+.supplier-cards .card input[type="checkbox"] {
+    display: none;
+}
+
 .actions{
     display: flex;
     justify-content: space-between;

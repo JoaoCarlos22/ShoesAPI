@@ -39,7 +39,7 @@ exports.getCalçado = async (req, res) => {
 
         // Renderiza a página /calcado/:id com os dados necessários
         res.render('pages/calcado/calcado', {
-            title: `Calçado ${calcado.name}`,
+            title: `${calcado.name}`,
             style: 'calcado.css',
             shoe: calcado,
         });
@@ -163,7 +163,8 @@ exports.getUpdateCalçado = async (req, res) => {
             title: 'Atualizar calçado',
             style: 'updCalcado.css',
             //js: 'btn-delete.js',
-            shoe: calçado
+            shoe: calçado,
+            suppliers: await Fornecedor.find({})
         });
     } catch (error) {
         console.error('Erro ao buscar o calçado:', error);
