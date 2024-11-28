@@ -138,7 +138,7 @@
     // Função para calcular e atualizar o preço total e a quantidade total
     function updateTotalPriceAndQuantity() {
         let totalPrice = 0;
-        let totalQuantity = 0;
+        let totalQuantity = initialTotalQuantity;
 
         const cards = supplierCards.querySelectorAll(".card");
 
@@ -161,8 +161,7 @@
         });
 
         priceInput.value = totalPrice.toFixed(2);
-        calculatedTotalQuantity = totalQuantity; // Armazena a quantidade calculada
-        quantityInput.value = Math.max(quantityInput.value, totalQuantity); // Garante que o valor não seja menor que o total calculado
+        quantityInput.value = totalQuantity; // Armazena a quantidade calculada
         submitButton.disabled = totalQuantity === 0; // Desabilita botão se nenhum fornecedor for selecionado
     }
 
@@ -171,10 +170,22 @@
         const currentValue = parseInt(quantityInput.value || 0, 10);
 
         // Se o usuário tentar aumentar o valor acima do calculado sem selecionar fornecedores
-    if (currentValue > calculatedTotalQuantity && calculatedTotalQuantity === 0) {
-        alert("Você não pode aumentar a quantidade total sem selecionar fornecedores.");
-        quantityInput.value = initialTotalQuantity; // Volta para o valor inicial de shoe.totalQuantity
+        if (currentValue < initialTotalQuantity) {
+            alert("Você não pode aumentar a quantidade total sem selecionar fornecedores.");
+            quantityInput.value = initialTotalQuantity; // Volta para o valor inicial de shoe.totalQuantity
+        }
     }
+
+     // Adiciona evento para subquantidade de cada fornecedor
+    function handleSubquantityChange() {
+        const cards = supplierCards.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            const subquantityInput = card.querySelector(".card-qtd");
+            subquantityInput.addEventListener("input", () => {
+                updateTotalPriceAndQuantity(); // Atualiza ao alterar a subquantidade
+            });
+        });
     }
 
     // Função para inicializar preços com base na categoria e marca do calçado
@@ -189,6 +200,7 @@
             try {
                 const suppliers = await fetchPrices(initialCategory, initialBrand);
                 updateSupplierPrices(suppliers);
+                handleSubquantityChange();
                 updateTotalPriceAndQuantity();
             } catch (error) {
                 console.error("Erro ao inicializar os preços:", error);
@@ -202,6 +214,7 @@
         const brand = brandSelect.value;
         const suppliers = await fetchPrices(category, brand);
         updateSupplierPrices(suppliers);
+        handleSubquantityChange();
         updateTotalPriceAndQuantity();
     });
 
@@ -210,6 +223,7 @@
         const brand = brandSelect.value;
         const suppliers = await fetchPrices(category, brand);
         updateSupplierPrices(suppliers);
+        handleSubquantityChange();
         updateTotalPriceAndQuantity();
     });
 
