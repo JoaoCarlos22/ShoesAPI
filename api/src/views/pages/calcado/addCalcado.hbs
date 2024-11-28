@@ -48,7 +48,7 @@
                         <input type="checkbox" id="supplier-{{this._id}}" name="suppliers[{{this._id}}][supplier]" value="{{this._id}}">
                         <label for="supplier-{{this._id}}">
                             <h3>{{this.name}}</h3>
-                            <p>SubTotal:  <input class="unit-price" id="suppliers[{{this._id}}][subtotal]"  value="R$ --"></p>
+                            <p>SubTotal:  <input class="unit-price" name="suppliers[{{this._id}}][subtotal]" id="suppliers-{{this._id}}[subtotal]"  value="R$ --"></p>
                             <p>Subquantidade: <input class="card-qtd" type="number" name="suppliers[{{this._id}}][subquantity]" id="suppliers-{{this._id}}[subquantity]" min="1" required></p>
                         </label>
                     </div>
