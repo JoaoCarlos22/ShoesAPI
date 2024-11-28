@@ -68,7 +68,7 @@
     const submitButton = document.querySelector(".btn-submit");
 
     let supplierPrices = [];
-    let calculatedTotalQuantity = 0; // Quantidade total calculada com base nos fornecedores
+    const initialTotalQuantity = parseInt("{{shoe.totalQuantity}}", 10) || 0;
 
     // Função para buscar preços com base na categoria e marca
     async function fetchPrices(category, brand) {
@@ -155,18 +155,20 @@
     function handleQuantityInputChange() {
         const currentValue = parseInt(quantityInput.value || 0, 10);
 
-        // Se o usuário tentar aumentar o valor acima do calculado, redefine para o valor calculado
-        if (currentValue > calculatedTotalQuantity) {
-            alert("Você não pode aumentar a quantidade total sem selecionar fornecedores.");
-            quantityInput.value = calculatedTotalQuantity;
-        }
+        // Se o usuário tentar aumentar o valor acima do calculado sem selecionar fornecedores
+    if (currentValue > calculatedTotalQuantity && calculatedTotalQuantity === 0) {
+        alert("Você não pode aumentar a quantidade total sem selecionar fornecedores.");
+        quantityInput.value = initialTotalQuantity; // Volta para o valor inicial de shoe.totalQuantity
+    }
     }
 
     // Função para inicializar preços com base na categoria e marca do calçado
     async function initializePrices() {
         const initialCategory = "{{shoe.category._id}}"; // Valor inicial da categoria
         const initialBrand = "{{shoe.brand}}"; // Valor inicial da marca
-        console.log(initialBrand, initialCategory)
+
+        // Define a quantidade total inicial no campo quantityInput
+         quantityInput.value = initialTotalQuantity;
 
         if (initialCategory && initialBrand) {
             try {
