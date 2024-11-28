@@ -25,6 +25,11 @@
   align-items: start; /* Alinha as colunas no topo */
 }
 
+.title-details {
+  margin-top: 0;
+  padding: 5px
+}
+
 /* Campos do calçado */
 .shoe-details, .supplier-details {
   padding: 20px;
@@ -32,7 +37,7 @@
   border-radius: 8px;
   background-color: #f9f9f9;
   height: auto; /* Garante altura consistente */
-  min-height: 300px; /* Ajuste opcional para uniformidade */
+  min-height: 280px; /* Ajuste opcional para uniformidade */
 }
 
 /* Espaçamento entre grupos de fornecedores */

@@ -4,7 +4,7 @@
   <div class="details-grid">
     <!-- Coluna 1: DADOS -->
     <div class="shoe-details">
-      <h2>DETALHES</h2>
+      <h2 class="title-details">DETALHES</h2>
       <div class="shoe-field">
         <strong>Gênero:</strong> {{shoe.gender}}
       </div>
@@ -30,7 +30,7 @@
 
     <!-- Coluna 2: FORNECEDORES -->
     <div class="supplier-details">
-      <h2>FORNECEDORES</h2>
+      <h2 class="title-details">FORNECEDORES</h2>
       {{#each shoe.suppliers}}
       <div class="supplier-group">
         <div class="shoe-field"><strong>Fornecedor:</strong> {{this.supplier.name}}</div>
