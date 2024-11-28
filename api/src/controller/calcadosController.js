@@ -59,28 +59,37 @@ exports.getCadastroCalçado = async (req, res) => {
 
 exports.createCalçado = async (req, res) => {
     try {
-        const suppliers = req.body.suppliers || []; // Captura os fornecedores passados
-        const quantity = req.body.quantity; // Captura a quantidade
+        const suppliersArray = req.body.suppliers || []; // Captura os fornecedores passados
+        let totalQuantity = 0; // Inicializa a soma das subquantidades
+        let totalPrice = 0; // Inicializa a soma dos subtotais
 
+        // Calcula os valores de totalQuantity e totalPrice
+        suppliersArray.forEach(supplier => {
+            totalQuantity += supplier.subquantity; // Soma a subquantidade de cada fornecedor
+            totalPrice += supplier.subtotal; // Soma o subtotal de cada fornecedor
+        });
+
+        // Cria o novo calçado com os dados recebidos
         const newCalçado = new Calçado({
             name: req.body.name,
             gender: req.body.gender,
             size: req.body.size,
             color: req.body.color,
-            brand: req.body.brand,
             category: req.body.category,
-            supplier: suppliers, // Fornecedores
-            quantity: quantity,
-            totalPrice: req.body.price, // Preço total calculado
+            brand: req.body.brand,
+            suppliers: suppliersArray,
+            totalQuantity, // Total de subquantidades calculadas
+            totalPrice, // Total de subtotais calculados
         });
 
+        // Salva o calçado no banco de dados
         await newCalçado.save();
-        res.redirect('/ShoesSystem/home');
+        res.redirect('/ShoesSystem/home'); // Redireciona após o sucesso
     } catch (error) {
         console.error('Erro ao registrar calçado:', error);
-        res.status(500).send(error.message);
+        res.status(500).send(error.message); // Retorna o erro ao cliente
     }
-}
+};
 
 // Registra uma categoria
 exports.createCategory = async (req, res) => {
