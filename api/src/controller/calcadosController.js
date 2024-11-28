@@ -186,6 +186,9 @@ exports.updateCalçado = async (req, res) => {
         // Certifica-se de que suppliers é um array
         const suppliersArray = Array.isArray(req.body.suppliers) ? req.body.suppliers : [req.body.suppliers];
 
+        let lastTotalPrice = calçado.totalPrice || 0;
+        console.log("Preço total atual:",lastTotalPrice);
+
         // verifica se há algum array (length diferente que zero)
         if (suppliersArray.length > 0) {
             console.log("Array de suppliers recebido:", suppliersArray);
@@ -215,8 +218,8 @@ exports.updateCalçado = async (req, res) => {
                     // Retorna o fornecedor processado
                     return {
                         supplier: supplierId,        // ID do fornecedor
-                        subquantity: parsedSubquantity, // Subquantidade convertida
-                        subtotal: parsedSubtotal        // Subtotal convertido
+                        subtotal: parsedSubtotal,        // Subtotal convertido
+                        subquantity: parsedSubquantity // Subquantidade convertida
                     };
                 });
             });
@@ -225,16 +228,19 @@ exports.updateCalçado = async (req, res) => {
                 calçado.suppliers = processedSuppliers;
             } else {
                 calçado.suppliers = []; // Nenhum fornecedor com subquantity válida
+                calçado.totalPrice = lastTotalPrice;
             };
         } else {
             // se não há fornecedores, remove todos os fornecedores
             calçado.suppliers = [];
+            calçado.totalPrice = lastTotalPrice;
         }
 
         // atualiza os dados do calçado (quantidade e/ou preço)
         // se houver preço, ele atualiza
         if (req.body.price) {
             calçado.totalPrice = parseFloat(req.body.price.replace('R$', '').trim());
+            console.log("Preço total (req.body):",calçado.totalPrice);
         }
         
         // se houver quantidade, ele atualiza
